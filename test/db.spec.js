@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+process.env.DB_NAME = process.env.TEST_DB_NAME;
+
 const db  = require('../server/db');
 
 before('before db test', async function() {
