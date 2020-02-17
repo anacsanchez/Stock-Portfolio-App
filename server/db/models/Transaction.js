@@ -22,7 +22,8 @@ const Transaction = db.define('transaction', {
       // afterCreate: () => {
 
       // }
-    }
+    },
+    underscored: true
   }
 );
 

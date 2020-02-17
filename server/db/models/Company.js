@@ -18,6 +18,9 @@ const Company = db.define('company', {
         len: [1,5]
       }
     }
+  },
+  {
+    underscored: true
   }
 );
 

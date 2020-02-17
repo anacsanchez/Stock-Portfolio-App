@@ -12,6 +12,9 @@ const Portfolio = db.define('portfolio', {
       type: DataTypes.FLOAT,
       defaultValue: 0.0
     }
+  },
+  {
+    underscored: true
   }
 );
 

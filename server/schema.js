@@ -1,19 +1,28 @@
 const { gql } = require('apollo-server');
 
 const typeDefs = gql`
+
+  type Query {
+    me: User
+    portfolio(userId: ID!): Portfolio
+  }
+
+  type Mutation {
+    signup(user: User): String
+  }
+
   type User {
     id: ID!
     firstName: String
     lastName: String
     email: String!
     password: String!
-    portfolio: Portfolio!
   }
 
   type Portfolio {
     id: ID!
     stocks: [Stock]
-    balance: Int!
+    balance: Float!
   }
 
   type Stock {
@@ -30,9 +39,9 @@ const typeDefs = gql`
 
   type Transaction {
     id: ID!
-    stock: [Stock]
+    stock: Stock!
     quantity: Int!
-    price: Int!
+    price: Float!
   }
 `;
 

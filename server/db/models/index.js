@@ -4,9 +4,8 @@ const Stock = require('./Stock')
 const Company = require('./Company');
 const Transaction = require('./Transaction');
 
-User.hasMany(Stock, { through: Portfolio });
 Portfolio.belongsTo(User);
-Stock.hasOne(Company);
-Transaction.belongsTo(User);
-Transaction.hasOne(Company);
+Portfolio.hasMany(Stock);
+Transaction.belongsTo(Portfolio);
+Transaction.belongsTo(Company);
 

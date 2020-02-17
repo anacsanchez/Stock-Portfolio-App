@@ -13,6 +13,9 @@ const Stock = db.define('stock', {
       allowNull: false,
       defaultValue: 0
     }
+  },
+  {
+    underscored: true
   }
 );
 
