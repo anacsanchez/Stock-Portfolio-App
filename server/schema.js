@@ -3,15 +3,17 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
 
   type Query {
-    me: User
+    me: FindMeResponse!
     portfolio(userId: ID!): Portfolio
+    stock(symbol: String!): Stock
   }
 
   type Mutation {
-    signup(input: CreateUserInput!): User
+    signup(input: UserAccountInput!): UserAccountResponse
+    login(input: UserAccountInput!): UserAccountResponse
   }
 
-  input CreateUserInput {
+  input UserAccountInput {
     email: String!
     password: String!
   }
@@ -25,16 +27,32 @@ const typeDefs = gql`
     portfolio: Portfolio
   }
 
+  type UserAccountResponse {
+    user: User
+    token: String
+  }
+
+  type FindMeResponse {
+    user: User
+    loggedIn: Boolean!
+  }
+
   type Portfolio {
     id: ID!
     stocks: [Stock]
     balance: Float!
   }
 
-  type Stock {
+  type UserStock {
     id: ID!
     shares: Int!
     company: Company!
+  }
+
+  type Stock {
+    symbol: String!
+    company: Company!
+    price: Float!
   }
 
   type Company {

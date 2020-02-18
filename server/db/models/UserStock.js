@@ -1,7 +1,7 @@
 const { DataTypes } = require('sequelize');
-const db = require('../db')
+const db = require('../db');
 
-const Stock = db.define('stock', {
+const UserStock = db.define('user_stock', {
     id: {
       type: DataTypes.INTEGER,
       autoIncrement: true,
@@ -19,4 +19,4 @@ const Stock = db.define('stock', {
   }
 );
 
-module.exports = Stock;
+module.exports = UserStock;

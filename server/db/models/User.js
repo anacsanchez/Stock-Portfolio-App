@@ -1,5 +1,4 @@
 const { DataTypes } = require('sequelize');
-const Portfolio = require('./Portfolio')
 const bcrypt = require('bcrypt');
 const db = require('../db');
 
@@ -37,7 +36,7 @@ const User = db.define('user', {
             const hash = await(bcrypt.hash(user.password, +process.env.DB_SALT));
             user.password = hash;
           } catch(err) {
-            console.log(err)
+            console.log(err);
             throw new Error(err);
           }
         }

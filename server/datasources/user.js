@@ -1,4 +1,6 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
+const { AuthenticationError } = require('apollo-server');
+const { generateToken, verifyPassword } = require('../utils');
 
 class UserAPI extends RESTDataSource {
   constructor({ store }) {
@@ -6,27 +8,56 @@ class UserAPI extends RESTDataSource {
     this.store = store;
   }
 
-  // initialize(config) {
-  //   this.context = config.context;
-  // }
+  initialize(config) {
+    this.context = config.context;
+  }
+
+  async loginUser(userInput) {
+    if(!this.context.user) {
+      try {
+        const { models } = this.store;
+        const foundUser = await models.user.findOne({
+          where: { email: userInput.email }, include: [ models.portfolio ]
+        });
+        if(!foundUser) {
+          throw new AuthenticationError('User not found with provided email address');
+        }
+        const isVerified = await verifyPassword(userInput.password, foundUser.password);
+        if(!isVerified) {
+          throw new AuthenticationError('Password input does not match user password');
+        }
+        const token = await generateToken(foundUser.email, foundUser.id);
+        return { user: foundUser, token };
+      } catch(err) {
+        console.log('Error', err);
+        throw err;
+      }
+    }
+    else {
+      return this.context.user;
+    }
+  }
 
   async signupUser(userInput) {
     const { models } = this.store;
     try {
-      const { userInstance, wasCreated  } = await models.user.findOrCreate({
-        where: { email: userInput.email },
-        defaults: { ...userInput },
-        include: [ models.portfolio ]
-      })
-      .spread((user,created) => ({ userInstance: user, wasCreated: created }));
-
-      if(wasCreated) {
-        await userInstance.createPortfolio({ balance: 5000.00 });
-        await userInstance.reload({ include: [ models.portfolio ]});
+      const userExists = await models.user.findOne({
+        where: { email: userInput.email }, include: [ models.portfolio ]
+      });
+      if(userExists && userExists.email) {
+        throw new AuthenticationError('User already exists with input email address');
       }
-      return userInstance;
+      const newUser = await models.user.create({
+        ...userInput,
+        portfolio: {
+          balance: 5000.00
+        }
+      }, {  include: [ models.portfolio ]});
+      const token = await generateToken(newUser.email, newUser.id);
+      return { user: newUser, token };
     } catch(err) {
-      throw new Error(err);
+      console.log('Error', err);
+      throw err;
     }
   }
 }

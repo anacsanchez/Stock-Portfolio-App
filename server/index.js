@@ -1,21 +1,43 @@
 require('dotenv').config();
 
-const { ApolloServer } = require('apollo-server');
+const { ApolloServer, AuthenticationError } = require('apollo-server');
 const typeDefs = require('./schema');
 const { createStore } = require('./utils');
-const { UserAPI } = require('./datasources');
+const { UserAPI, StockAPI } = require('./datasources');
 const resolvers = require('./resolvers');
+const { decodeToken } = require('./utils');
 
 const store = createStore();
 
 const dataSources = () => ({
-  UserAPI: new UserAPI({ store })
+  UserAPI: new UserAPI({ store }),
+  StockAPI: new StockAPI()
 });
+
+const context = async({ req }) => {
+  const auth = (req.headers && req.headers.authorization) || '';
+
+  if(!auth) return { user: null };
+
+  try {
+    const { id } = await decodeToken(auth);
+    const { models } = store;
+    const user = await models.user.findByPk(id, {
+      include: [ models.portfolio ],
+      attributes: { exclude: ['password']}
+    });
+    return user ? { user } : { user: null };
+
+  } catch(err) {
+    throw new AuthenticationError(err);
+  }
+};
 
 const server = new ApolloServer({
   typeDefs,
   dataSources,
-  resolvers
+  resolvers,
+  context
 });
 
 
