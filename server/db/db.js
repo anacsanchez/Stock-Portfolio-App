@@ -12,4 +12,10 @@ db.authenticate()
 })
 .catch(err => console.error(err));
 
+// db.sync({ force: true })
+// .then(() => {
+//   console.log('database synced')
+// })
+// .catch( err => console.error(err))
+
 module.exports = db;

@@ -15,6 +15,24 @@ before('before db test', async function() {
 
 describe('db', function() {
   it('connects and syncs to test database successfully', function() {});
+  it('creates a user with a portfolio', async function() {
+    const userInput = { email: "testingmuch@test.com", password:"should be a better password"}
+    const { userInstance, wasCreated  } = await db.models.user.findOrCreate({
+      where: {
+        email: userInput.email
+      },
+      defaults: { ...userInput },
+      include: [ db.models.portfolio ]
+    })
+    .spread((user,created) => ({ userInstance: user, wasCreated: created }));
+
+    if(wasCreated) {
+      await userInstance.createPortfolio({ balance: 5000.00 });
+      await userInstance.reload({ include: [ db.models.portfolio ]});
+    }
+    return userInstance;
+
+  });
 });
 
 after('after db test', async function() {

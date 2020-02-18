@@ -10,7 +10,7 @@ const Portfolio = db.define('portfolio', {
     },
     balance: {
       type: DataTypes.FLOAT,
-      defaultValue: 0.0
+      defaultValue: 5000.00
     }
   },
   {

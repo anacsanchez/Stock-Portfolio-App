@@ -1,7 +1,11 @@
 const db = require('./db');
 
+const { models } = db;
+
 const createStore = () => {
-  return { db };
+  return { db, models };
 };
 
-module.exports = createStore;
+module.exports = {
+  createStore
+};
