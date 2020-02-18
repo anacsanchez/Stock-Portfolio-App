@@ -3,7 +3,7 @@ require('dotenv').config();
 const { ApolloServer, AuthenticationError } = require('apollo-server');
 const typeDefs = require('./schema');
 const { createStore } = require('./utils');
-const { UserAPI, StockAPI } = require('./datasources');
+const { UserAPI, StockAPI, PortfolioAPI } = require('./datasources');
 const resolvers = require('./resolvers');
 const { decodeToken } = require('./utils');
 
@@ -11,7 +11,8 @@ const store = createStore();
 
 const dataSources = () => ({
   UserAPI: new UserAPI({ store }),
-  StockAPI: new StockAPI()
+  StockAPI: new StockAPI(),
+  Portfolio: new PortfolioAPI({ store })
 });
 
 const context = async({ req }) => {

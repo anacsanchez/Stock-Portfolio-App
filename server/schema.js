@@ -5,7 +5,7 @@ const typeDefs = gql`
   type Query {
     me: FindMeResponse!
     portfolio(userId: ID!): Portfolio
-    stock(symbol: String!): Stock
+    getStock(symbol: String!): GetStockResponse
   }
 
   type Mutation {
@@ -16,6 +16,12 @@ const typeDefs = gql`
   input UserAccountInput {
     email: String!
     password: String!
+  }
+
+  type GetStockResponse {
+    stock: Stock
+    success: Boolean!
+    message: String
   }
 
   type User {
@@ -41,6 +47,12 @@ const typeDefs = gql`
     id: ID!
     stocks: [Stock]
     balance: Float!
+  }
+
+  type BuyStockInput {
+    stock: Stock
+    price: Float!
+    quantity: Int!
   }
 
   type UserStock {

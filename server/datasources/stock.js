@@ -1,4 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
+const { UserInputError } = require('apollo-server');
 
 class StockAPI extends RESTDataSource {
   constructor() {
@@ -16,14 +17,21 @@ class StockAPI extends RESTDataSource {
         name: stock.companyName,
         symbol: stock.symbol
       },
-      price: stock.latestPrice ? stock.latestPrice : stock.previousClose
+      price: stock.latestPrice ? stock.latestPrice : stock.previousClose,
     };
   }
 
+  //TODO: Switch to class Error methods, such as didReceiveError
   async getStock(symbol) {
-    const response = await this.get(`stock/${symbol}/quote`);
-    console.log(response);
-    // return this.stockReducer(stock);
+    try {
+      const response = await this.get(`stock/${symbol}/quote`);
+      const stock = this.stockReducer(response);
+      return { stock, success: true, message: ''};
+    } catch(err) {
+      console.log("Error", err);
+      const { body } = err.extensions.response;
+      return { stock: null, success: false, message: body };
+    }
   }
 }
 
