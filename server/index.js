@@ -12,7 +12,7 @@ const store = createStore();
 const dataSources = () => ({
   UserAPI: new UserAPI({ store }),
   StockAPI: new StockAPI(),
-  Portfolio: new PortfolioAPI({ store })
+  PortfolioAPI: new PortfolioAPI({ store })
 });
 
 const context = async({ req }) => {
@@ -41,8 +41,13 @@ const server = new ApolloServer({
   context
 });
 
+if(process.env.NODE_ENV == 'test') {
+  module.exports = server;
+}
+else {
+  server.listen().then(({ url }) => {
+    console.log('server ready at', url);
+  });
+}
 
 
-server.listen().then(({ url }) => {
-  console.log('server ready at', url)
-});

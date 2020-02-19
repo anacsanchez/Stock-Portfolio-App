@@ -1,5 +1,4 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
-const { ForbiddenError } = require('apollo-server');
 
 class PortfolioAPI extends RESTDataSource {
   constructor({ store }) {
@@ -9,15 +8,44 @@ class PortfolioAPI extends RESTDataSource {
 
   initialize(config) {
     this.context = config.context;
-    if(this.context.user) {
-      throw new ForbiddenError('User must be logged in');
-    }
   }
 
   async getPortfolio() {
+    await this.context.user.portfolio.reload({ include: [ { model: this.store.models.user_stock, as: 'userStocks'} ] });
     return this.context.user.portfolio;
   }
 
+  async getPortfolioTransactions() {
+    await this.context.user.portfolio.reload({ include: [this.store.models.transaction ] });
+    return this.context.user.portfolio.transactions;
+  }
+
+  async buyStock(transaction) {
+    const { symbol, quantity, price,companyName } = transaction;
+    const { user: { portfolio } } = this.context;
+    if(portfolio.balance < price) {
+      return { stock: null, success: false, message: 'Balance is too low to proceed with transaction' };
+    }
+    await portfolio.reload({ include: [this.store.models.transaction, { model: this.store.models.user_stock, as: 'userStocks'} ]});
+    const newTransaction = await portfolio.createTransaction({ symbol, quantity, price, companyName });
+
+    portfolio.balance -= price;
+    await portfolio.save();
+
+    const existingStock = await portfolio.getUserStocks({ where: {
+      symbol: symbol
+    }});
+
+    if(!existingStock.length) {
+      const newUserStock = await portfolio.createUserStock({ symbol, shares: quantity, companyName });
+      return { stock: newUserStock, success: true, message: '' };
+    }
+    else {
+      existingStock[0].shares += quantity;
+      await existingStock[0].save();
+      return { stock: existingStock[0], success:true, message: ''};
+    }
+  }
 }
 
 module.exports = PortfolioAPI;

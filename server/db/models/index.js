@@ -1,19 +1,17 @@
 const Portfolio = require('./Portfolio');
 const User = require('./User');
-const UserStock = require('./UserStock')
-const Company = require('./Company');
+const UserStock = require('./UserStock');
 const Transaction = require('./Transaction');
 
 User.hasOne(Portfolio);
 Portfolio.belongsTo(User);
-Portfolio.hasMany(UserStock);
+Portfolio.hasMany(UserStock, { as: 'userStocks'});
 Transaction.belongsTo(Portfolio);
-Transaction.belongsTo(Company);
+Portfolio.hasMany(Transaction);
 
 module.exports = {
   User,
   Portfolio,
   UserStock,
-  Company,
   Transaction
 };

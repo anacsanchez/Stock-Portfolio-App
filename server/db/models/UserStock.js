@@ -12,10 +12,26 @@ const UserStock = db.define('user_stock', {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0
-    }
+    },
+    symbol: {
+      type: DataTypes.STRING,
+      validate: {
+        len: [1,5]
+      },
+      allowNull: false,
+      unique: true
+    },
+    companyName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
   },
   {
-    underscored: true
+    underscored: true,
+    // name: {
+    //   singular: 'userStock',
+    //   plural:'userStocks'
+    // }
   }
 );
 

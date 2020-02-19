@@ -15,14 +15,20 @@ const Transaction = db.define('transaction', {
     price: {
       type: DataTypes.FLOAT,
       allowNull: false
-    }
+    },
+    symbol: {
+      type: DataTypes.STRING,
+      validate: {
+        len: [1,5]
+      },
+      allowNull: false
+    },
+    companyName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
   },
   {
-    hooks: {
-      // afterCreate: () => {
-
-      // }
-    },
     underscored: true
   }
 );

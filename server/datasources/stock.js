@@ -13,11 +13,9 @@ class StockAPI extends RESTDataSource {
 
   stockReducer(stock) {
     return {
-      company: {
-        name: stock.companyName,
-        symbol: stock.symbol
-      },
-      price: stock.latestPrice ? stock.latestPrice : stock.previousClose,
+      symbol: stock.symbol,
+      company: stock.companyName,
+      price: stock.latestPrice ? stock.latestPrice : stock.previousClose
     };
   }
 
@@ -31,6 +29,36 @@ class StockAPI extends RESTDataSource {
       console.log("Error", err);
       const { body } = err.extensions.response;
       return { stock: null, success: false, message: body };
+    }
+  }
+
+  async getStocks(symbols) {
+    try {
+      const response = await this.get(`stock/market/batch`, { symbols: symbols.join(), types: "quote" });
+      const stocks = Object.keys(response).map((symbol) => this.stockReducer(response[symbol].quote));
+      return { stocks, success: true, message: ''};
+    } catch(err) {
+      console.log("Error", err);
+      const { body } = err.extensions.response;
+      return { stocks: null, success: false, message: body };
+    }
+  }
+
+  async mapCurrentPricesToStocks(stocks) {
+    try {
+      const stocksBySymbolsObj = stocks.reduce((stocksObj, currStock) => ({ [currStock.symbol]: currStock, ...stocksObj }), {});
+      const symbolsArr = Object.keys(stocksBySymbolsObj);
+      const response = await this.get(`stock/market/batch`, { symbols: symbolsArr.join(), types: "quote" });
+      const stocksWithCurrentPrices = symbolsArr.map(symbol => {
+        const stockFromAPI = this.stockReducer(response[symbol.toUpperCase()].quote);
+        stocksBySymbolsObj[symbol].setDataValue('currentUnitPrice', stockFromAPI.price);
+        return stocksBySymbolsObj[symbol].get();
+      });
+      return { stocks: stocksWithCurrentPrices, success: true, message: ''};
+    } catch(err) {
+      console.log("Error", err);
+      const { body } = err.extensions.response;
+      return { stocks: null, success: false, message: body };
     }
   }
 }

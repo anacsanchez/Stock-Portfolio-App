@@ -6,23 +6,18 @@ const typeDefs = gql`
     me: FindMeResponse!
     portfolio(userId: ID!): Portfolio
     getStock(symbol: String!): GetStockResponse
+    getPortfolioTransactions: [Transaction]
+    getPortfolio: GetPortfolioResponse
+    getStocks(symbols:[String!]): GetStocksResponse
   }
 
   type Mutation {
     signup(input: UserAccountInput!): UserAccountResponse
     login(input: UserAccountInput!): UserAccountResponse
+    buyStock(input: BuyStockInput!): BuyStockResponse
   }
 
-  input UserAccountInput {
-    email: String!
-    password: String!
-  }
-
-  type GetStockResponse {
-    stock: Stock
-    success: Boolean!
-    message: String
-  }
+  "User Schema"
 
   type User {
     id: ID!
@@ -31,6 +26,11 @@ const typeDefs = gql`
     email: String!
     password: String!
     portfolio: Portfolio
+  }
+
+  input UserAccountInput {
+    email: String!
+    password: String!
   }
 
   type UserAccountResponse {
@@ -43,44 +43,69 @@ const typeDefs = gql`
     loggedIn: Boolean!
   }
 
-  type Portfolio {
-    id: ID!
-    stocks: [Stock]
-    balance: Float!
+  "Stock API Schema"
+
+  type Stock {
+    symbol: String!
+    company: String!
+    price: Float!
   }
 
-  type BuyStockInput {
+  type GetStockResponse {
     stock: Stock
-    price: Float!
-    quantity: Int!
+    success: Boolean!
+    message: String
+  }
+
+  type GetStocksResponse {
+    stocks: [Stock]
+    success: Boolean!
+    message: String
+  }
+
+  "Portfolio/UserStock Schema"
+
+  type Portfolio {
+    id: ID!
+    stocks: [UserStock]
+    balance: Float!
   }
 
   type UserStock {
     id: ID!
     shares: Int!
-    company: Company!
-  }
-
-  type Stock {
     symbol: String!
-    company: Company!
-    price: Float!
-  }
-
-  type Company {
-    id: ID!
-    name: String!
-    ticker: String!
+    company: String!
+    currentUnitPrice: Float
   }
 
   type Transaction {
     id: ID!
-    stock: Stock!
+    symbol: String!
     quantity: Int!
     price: Float!
+    companyName: String!
+  }
+
+  type GetPortfolioResponse {
+    portfolio: Portfolio
+    success: Boolean!
+    message: String
+  }
+
+  input BuyStockInput {
+    symbol: String!
+    price: Float!
+    companyName: String!
+    quantity: Int!
+  }
+
+  type BuyStockResponse {
+    stock: UserStock
+    success: Boolean!
+    message: String
   }
 
 `;
-
 
 module.exports = typeDefs;
