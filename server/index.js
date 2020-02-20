@@ -16,7 +16,6 @@ const dataSources = () => ({
 });
 
 const context = async({ req }) => {
-  console.log(req)
   if(!req.headers || !req.headers.authorization || !req.headers.authorization.length || req.headers.authorization == 'null' || req.headers.authorization == 'undefined') {
     return { user: null };
   }
