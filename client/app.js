@@ -1,29 +1,32 @@
 import React from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import Routes from './routes';
 import gql from 'graphql-tag';
 
-const GET_STOCKS = gql`
-query getStocks($symbols:[String!]) {
-  getStocks(symbols: $symbols) {
-      stocks {
-      symbol
-      price
+const GET_ME = gql`
+  query GetMe {
+    getMe {
+      user {
+        id
+        portfolio {
+          id
+        }
       }
-      success
-      message
-  }
-}`;
+      loggedIn
+    }
+}
+`;
 
 export default function App () {
-  const { data, loading, error} = useQuery(GET_STOCKS, { variables: {"symbols": ["aalz","twtr"]} });
-  if(loading) return <p>Loading...</p>
-  if(error) return <p>ERROR</p>
-  if(!data) return <p>Not found</p>
+  // const client = useApolloClient();
+  // const { data, loading, error } = useQuery(GET_ME);
 
+  // console.log(data, loading, error)
+  // if(!data) {
+  //   client.writeData({ data: { isLoggedIn: false }});
+  //   localStorage.clear();
+  // }
   return (
-    <div>Hi
-      {JSON.stringify(data)}
-    </div>
+    <Routes />
   );
 }
 

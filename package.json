@@ -29,6 +29,7 @@
     "apollo-cache-inmemory": "^1.6.2",
     "apollo-client": "^2.6.3",
     "apollo-datasource-rest": "^0.7.0",
+    "apollo-link": "^1.2.13",
     "apollo-link-http": "^1.5.15",
     "apollo-server": "^2.10.1",
     "bcrypt": "^3.0.8",
@@ -40,11 +41,14 @@
     "pg-hstore": "^2.3.3",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "sequelize": "^5.21.4"
   },
   "devDependencies": {
     "@babel/core": "^7.8.4",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.8.4",
     "@babel/preset-react": "^7.8.3",

@@ -5,40 +5,39 @@ import { ApolloProvider } from '@apollo/react-hooks';
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
-import gql from 'graphql-tag';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { ApolloLink, concat } from 'apollo-link';
 
 const cache = new InMemoryCache();
-const link = new HttpLink({
-    uri: "http://localhost:4000/graphql"
+const httpLink = new HttpLink({
+  uri: "http://localhost:4000/"
+});
+
+const authMiddleware = new ApolloLink((operation, forward) => {
+  operation.setContext({
+    headers: {
+      authorization: localStorage.getItem('token') ?? null
+    }
+  });
+  return forward(operation);
 });
 
 const client = new ApolloClient({
-    cache,
-    link
+  cache,
+  link: concat(authMiddleware, httpLink),
+  resolvers: {}
 });
 
-// client.query({
-//     query: gql`
-//     query GetStocks($symbols:[String!]) {
-//     getStocks(symbols: $symbols) {
-//         stocks {
-//         symbol
-//         price
-//         }
-//         success
-//         message
-//     }
-//     }
-//     `,
-//     variables: {
-//         "symbols": ["aalz","twtr"]
-//     }
-// })
-// .then(result => console.log(result))
-// .catch(err => console.log(err))
+cache.writeData({
+  data: {
+    isLoggedIn: !!localStorage.getItem('token')
+  }
+});
 
 ReactDOM.render(
-    <ApolloProvider client={client}>
-        <App />
-    </ApolloProvider>
+  <ApolloProvider client={client}>
+    <Router>
+      <App />
+    </Router>
+  </ApolloProvider>
 ,document.getElementById('app'));

@@ -16,9 +16,12 @@ const dataSources = () => ({
 });
 
 const context = async({ req }) => {
-  const auth = (req.headers && req.headers.authorization) || '';
+  console.log(req)
+  if(!req.headers || !req.headers.authorization || !req.headers.authorization.length || req.headers.authorization == 'null' || req.headers.authorization == 'undefined') {
+    return { user: null };
+  }
 
-  if(!auth) return { user: null };
+  const auth = req.headers.authorization;
 
   try {
     const { id } = await decodeToken(auth);
@@ -27,7 +30,7 @@ const context = async({ req }) => {
       include: [ models.portfolio ],
       attributes: { exclude: ['password']}
     });
-    return user ? { user } : { user: null };
+    return user ? { user, token: auth } : { user: null };
 
   } catch(err) {
     throw new AuthenticationError(err);

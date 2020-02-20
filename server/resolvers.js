@@ -2,7 +2,9 @@ const { ForbiddenError } = require('apollo-server');
 
 module.exports = {
   Query: {
-    me: async(_, __, { user }) => !user ? { user: null, loggedIn: false} : { user, loggedIn: true },
+    getMe: async(_, __, { user }) => {
+      return !user ? { user: null, loggedIn: false} : { user, loggedIn: true };
+    },
     getStock: async(_, { symbol: inputSymbol}, { dataSources }) => {
       const stockAPIResponse = await dataSources.StockAPI.getStock(inputSymbol);
       return stockAPIResponse;
@@ -15,9 +17,9 @@ module.exports = {
       if(!user) {
         throw new ForbiddenError('User must be logged in');
       }
-      const { balance, userStocks } = await dataSources.PortfolioAPI.getPortfolio();
+      const { balance, userStocks, id } = await dataSources.PortfolioAPI.getPortfolio();
       const { stocks, success, message } = await dataSources.StockAPI.mapCurrentPricesToStocks(userStocks);
-      return { portfolio: { balance, stocks }, success, message};
+      return { portfolio: { id, balance, stocks }, success, message};
     },
     getPortfolioTransactions: async(_, __, { user, dataSources }) => {
       if(!user) {
@@ -34,9 +36,11 @@ module.exports = {
       return { user, token };
     },
     login: async(_, { input: userInput }, { dataSources }) => {
-      const currentUser = await dataSources.UserAPI.loginUser(userInput);
-      const { user, token } = currentUser;
-      return { user, token };
+      const currentUserResponse = await dataSources.UserAPI.loginUser(userInput);
+      if (!currentUserResponse.success) {
+        throw currentUserResponse.message;
+      }
+      return currentUserResponse;
     },
     buyStock: async(_, { input: transactionInput}, { user, dataSources }) => {
       if(!user) {

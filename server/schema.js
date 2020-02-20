@@ -3,10 +3,9 @@ const { gql } = require('apollo-server');
 const typeDefs = gql`
 
   type Query {
-    me: FindMeResponse!
-    portfolio(userId: ID!): Portfolio
+    getMe: FindMeResponse!
     getStock(symbol: String!): GetStockResponse
-    getPortfolioTransactions: [Transaction]
+    getPortfolioTransactions: GetPortfolioTransactionsResponse
     getPortfolio: GetPortfolioResponse
     getStocks(symbols:[String!]): GetStocksResponse
   }
@@ -36,6 +35,8 @@ const typeDefs = gql`
   type UserAccountResponse {
     user: User
     token: String
+    success: Boolean!
+    message: String
   }
 
   type FindMeResponse {
@@ -75,7 +76,7 @@ const typeDefs = gql`
     id: ID!
     shares: Int!
     symbol: String!
-    company: String!
+    companyName: String!
     currentUnitPrice: Float
   }
 
@@ -89,6 +90,12 @@ const typeDefs = gql`
 
   type GetPortfolioResponse {
     portfolio: Portfolio
+    success: Boolean!
+    message: String
+  }
+
+  type GetPortfolioTransactionsResponse {
+    transactions: [Transaction]
     success: Boolean!
     message: String
   }

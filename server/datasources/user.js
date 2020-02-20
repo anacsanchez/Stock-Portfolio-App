@@ -27,14 +27,14 @@ class UserAPI extends RESTDataSource {
           throw new AuthenticationError('Password input does not match user password');
         }
         const token = await generateToken(foundUser.email, foundUser.id);
-        return { user: foundUser, token };
+        return { user: foundUser, token, success: true, message: '' };
       } catch(err) {
         console.log('Error', err);
-        throw err;
+        return { user: null, token: '', success: false, message: err} ;
       }
     }
     else {
-      return this.context.user;
+      return { user: this.context.user, token: this.context.auth, success: true, message: '' };
     }
   }
 
@@ -57,7 +57,7 @@ class UserAPI extends RESTDataSource {
       return { user: newUser, token };
     } catch(err) {
       console.log('Error', err);
-      throw err;
+      return { user: null, token: ''}
     }
   }
 }

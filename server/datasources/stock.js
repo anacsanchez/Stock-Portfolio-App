@@ -14,7 +14,7 @@ class StockAPI extends RESTDataSource {
   stockReducer(stock) {
     return {
       symbol: stock.symbol,
-      company: stock.companyName,
+      companyName: stock.companyName,
       price: stock.latestPrice ? stock.latestPrice : stock.previousClose
     };
   }

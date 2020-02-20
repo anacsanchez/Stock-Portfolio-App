@@ -16,8 +16,13 @@ class PortfolioAPI extends RESTDataSource {
   }
 
   async getPortfolioTransactions() {
-    await this.context.user.portfolio.reload({ include: [this.store.models.transaction ] });
-    return this.context.user.portfolio.transactions;
+    try {
+      await this.context.user.portfolio.reload({ include: [this.store.models.transaction ] });
+      return { transactions: this.context.user.portfolio.transactions, success: true, message: ''};
+    }
+    catch(err) {
+      return { transactions: null, success: false, message: err };
+    }
   }
 
   async buyStock(transaction) {
