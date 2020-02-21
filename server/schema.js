@@ -50,6 +50,7 @@ const typeDefs = gql`
     symbol: String!
     companyName: String!
     currentUnitPrice: Float!
+    isUp: Boolean
   }
 
   type GetStockResponse {
@@ -78,6 +79,7 @@ const typeDefs = gql`
     symbol: String!
     companyName: String!
     currentUnitPrice: Float
+    isUp: Boolean
   }
 
   type Transaction {

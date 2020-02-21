@@ -16,17 +16,13 @@ const Login = () => {
     onError(err) { console.error(err); }}
   );
 
-  const handleSubmit = ({ email, password }) => {
-    return login({ variables: { user: { email, password } } });
-  };
-
   if(loading) return <div>Loading...</div>;
 
   return (
     <div>
-    <h2>Login</h2>
-    { error && <div>Login Error, please try again</div> }
-    <UserForm handleSubmit={ handleSubmit }/>
+      <h2>Login</h2>
+      { error && <div>Login Error, please try again</div> }
+      <UserForm handleSubmit={(userInput) => login({ variables: { user: { ...userInput } } }) }/>
     </div>
   );
 };

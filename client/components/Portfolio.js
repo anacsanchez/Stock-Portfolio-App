@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import Purchase from './Purchase';
-import PortfolioStocks from './PortfolioStocks';
+import PurchaseStock from './PurchaseStock';
+import UserStocks from './UserStocks';
 import { GET_PORTFOLIO } from '../graphql';
 
 export default function Portfolio () {
@@ -12,14 +12,14 @@ export default function Portfolio () {
   if(error) return <p>Error displaying portfolio { console.error(error) }</p>;
   if(!data) return <p>Not found</p>;
 
-  const { getPortfolio: { portfolio: { stocks, balance } }} = data;
+  const { getPortfolio: { portfolio: { stocks, balance } } } = data;
 
   return (
     <div>
       <h1>Portfolio</h1>
-      <Purchase />
+      <PurchaseStock />
       <div>Balance: { balance }</div>
-      <PortfolioStocks stocks={stocks}/>
+      <UserStocks stocks={ stocks }/>
     </div>
   );
 }

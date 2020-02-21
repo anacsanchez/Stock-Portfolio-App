@@ -14,11 +14,14 @@ export const GET_PORTFOLIO = gql`
   query GetPortfolio {
     getPortfolio {
       portfolio {
+        id
         stocks {
+          id
           symbol
           currentUnitPrice
           shares
           companyName
+          isUp
         }
         balance
       }
@@ -44,6 +47,7 @@ export const GET_TRANSACTIONS = gql`
   query GetPortfolioTransactions {
     getPortfolioTransactions {
       transactions {
+        id
         quantity
       }
       success
@@ -59,6 +63,7 @@ export const LOGIN_USER = gql`
       user {
         id,
         portfolio {
+          id
           balance
         }
       },
@@ -81,6 +86,7 @@ export const BUY_STOCK = gql`
       stock {
         symbol
         shares
+        companyName
       }
     }
   }

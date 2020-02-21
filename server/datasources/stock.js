@@ -15,33 +15,22 @@ class StockAPI extends RESTDataSource {
     return {
       symbol: stock.symbol,
       companyName: stock.companyName,
-      currentUnitPrice: stock.latestPrice ? stock.latestPrice : stock.previousClose
+      currentUnitPrice: stock.latestPrice ? stock.latestPrice : stock.previousClose,
+      isUp: stock.changePercent && stock.changePercent > 0
     };
   }
 
   //TODO: Switch to class Error methods, such as didReceiveError
   async getStock(symbol) {
-    try {
       const response = await this.get(`stock/${symbol}/quote`);
       const stock = this.stockReducer(response);
       return { stock, success: true, message: ''};
-    } catch(err) {
-      console.log("Error", err);
-      const { body } = err.extensions.response;
-      return { stock: null, success: false, message: err };
-    }
   }
 
   async getStocks(symbols) {
-    try {
-      const response = await this.get(`stock/market/batch`, { symbols: symbols.join(), types: "quote" });
-      const stocks = Object.keys(response).map((symbol) => this.stockReducer(response[symbol].quote));
-      return { stocks, success: true, message: ''};
-    } catch(err) {
-      console.log("Error", err);
-      const { body } = err.extensions.response;
-      return { stocks: null, success: false, message: body };
-    }
+    const response = await this.get(`stock/market/batch`, { symbols: symbols.join(), types: "quote" });
+    const stocks = Object.keys(response).map((symbol) => this.stockReducer(response[symbol].quote));
+    return { stocks, success: true, message: ''};
   }
 
   async mapCurrentPricesToStocks(stocks) {
@@ -52,13 +41,12 @@ class StockAPI extends RESTDataSource {
       const stocksWithCurrentPrices = symbolsArr.map(symbol => {
         const stockFromAPI = this.stockReducer(response[symbol.toUpperCase()].quote);
         stocksBySymbolsObj[symbol].setDataValue('currentUnitPrice', stockFromAPI.currentUnitPrice);
+        stocksBySymbolsObj[symbol].setDataValue('isUp', stockFromAPI.isUp);
         return stocksBySymbolsObj[symbol].get();
       });
       return { stocks: stocksWithCurrentPrices, success: true, message: ''};
     } catch(err) {
-      console.log("Error", err);
-      const { body } = err.extensions.response;
-      return { stocks: null, success: false, message: body };
+      throw(err);
     }
   }
 }

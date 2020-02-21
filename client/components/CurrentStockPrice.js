@@ -1,9 +1,9 @@
 import React from 'react';
 
-const CurrentPrice = ({ currentUnitPrice, isUp }) => {
+const CurrentStockPrice = ({ currentUnitPrice, isUp }) => {
   return (
     <div className={ isUp ? 'price-green' : 'price-red'}>Current Price: { currentUnitPrice }</div>
   );
 };
 
-export default CurrentPrice;
+export default CurrentStockPrice;

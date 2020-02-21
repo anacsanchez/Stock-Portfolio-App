@@ -1,12 +1,12 @@
 import React from 'react';
-import Stock from './Stock';
+import SingleStock from './SingleStock';
 
 const PortfolioStocks = ({ stocks }) => {
   return (
     <div>
     Stocks:
     {
-      stocks?.map((stock) => <Stock key={stock.symbol} stock={stock} />)
+      stocks?.map((stock) => <SingleStock key={stock.symbol} stock={stock} />)
     }
     </div>
   );

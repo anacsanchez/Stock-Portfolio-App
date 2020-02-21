@@ -4,7 +4,6 @@ import UserForm from './UserForm';
 import { SIGNUP_USER } from '../graphql';
 
 const Signup = () => {
-
   const client = useApolloClient();
 
   const [signup, { data, loading, error }] = useMutation(SIGNUP_USER, {
@@ -20,7 +19,7 @@ const Signup = () => {
   return (
     <div>
       <h1>Signup</h1>
-      <UserForm handleSubmit={({email, password}) => signup({ variables: { user: { email, password }}})}/>
+      <UserForm handleSubmit={(userInput) => signup({ variables: { user: {...userInput} } })}/>
     </div>
   );
 };
