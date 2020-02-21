@@ -26,15 +26,15 @@ class PortfolioAPI extends RESTDataSource {
   }
 
   async buyStock(transaction) {
-    const { symbol, quantity, price,companyName } = transaction;
+    const { symbol, quantity, currentUnitPrice,companyName } = transaction;
     const { user: { portfolio } } = this.context;
-    if(portfolio.balance < price) {
+    if(portfolio.balance < (quantity * currentUnitPrice)) {
       return { stock: null, success: false, message: 'Balance is too low to proceed with transaction' };
     }
     await portfolio.reload({ include: [this.store.models.transaction, { model: this.store.models.user_stock, as: 'userStocks'} ]});
-    const newTransaction = await portfolio.createTransaction({ symbol, quantity, price, companyName });
+    const newTransaction = await portfolio.createTransaction({ symbol, quantity, currentUnitPrice, companyName });
 
-    portfolio.balance -= price;
+    portfolio.balance -= (quantity * currentUnitPrice);
     await portfolio.save();
 
     const existingStock = await portfolio.getUserStocks({ where: {

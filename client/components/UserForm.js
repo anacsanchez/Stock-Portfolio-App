@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
-const LoginForm = ({ onSubmit }) => {
+const UserForm = ({ handleSubmit }) => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
   const handleFormSubmit = (evt) => {
     evt.preventDefault();
-    onSubmit({ email, password });
+    handleSubmit({ email, password });
   };
 
   return (
@@ -20,4 +20,4 @@ const LoginForm = ({ onSubmit }) => {
   );
 };
 
-export default LoginForm;
+export default UserForm;

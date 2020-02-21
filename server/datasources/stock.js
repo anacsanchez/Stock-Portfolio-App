@@ -15,7 +15,7 @@ class StockAPI extends RESTDataSource {
     return {
       symbol: stock.symbol,
       companyName: stock.companyName,
-      price: stock.latestPrice ? stock.latestPrice : stock.previousClose
+      currentUnitPrice: stock.latestPrice ? stock.latestPrice : stock.previousClose
     };
   }
 
@@ -28,7 +28,7 @@ class StockAPI extends RESTDataSource {
     } catch(err) {
       console.log("Error", err);
       const { body } = err.extensions.response;
-      return { stock: null, success: false, message: body };
+      return { stock: null, success: false, message: err };
     }
   }
 
@@ -51,7 +51,7 @@ class StockAPI extends RESTDataSource {
       const response = await this.get(`stock/market/batch`, { symbols: symbolsArr.join(), types: "quote" });
       const stocksWithCurrentPrices = symbolsArr.map(symbol => {
         const stockFromAPI = this.stockReducer(response[symbol.toUpperCase()].quote);
-        stocksBySymbolsObj[symbol].setDataValue('currentUnitPrice', stockFromAPI.price);
+        stocksBySymbolsObj[symbol].setDataValue('currentUnitPrice', stockFromAPI.currentUnitPrice);
         return stocksBySymbolsObj[symbol].get();
       });
       return { stocks: stocksWithCurrentPrices, success: true, message: ''};

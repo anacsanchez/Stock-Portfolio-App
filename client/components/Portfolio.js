@@ -1,23 +1,8 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import gql from 'graphql-tag';
-import Stock from './Stock';
-
-const GET_PORTFOLIO = gql`
-  query GetPortfolio {
-    getPortfolio {
-      portfolio {
-        stocks {
-          symbol
-          currentUnitPrice
-          shares
-          companyName
-        }
-        balance
-      }
-    }
-  }
-`;
+import Purchase from './Purchase';
+import PortfolioStocks from './PortfolioStocks';
+import { GET_PORTFOLIO } from '../graphql';
 
 export default function Portfolio () {
 
@@ -31,11 +16,10 @@ export default function Portfolio () {
 
   return (
     <div>
+      <h1>Portfolio</h1>
+      <Purchase />
       <div>Balance: { balance }</div>
-      Stocks:
-      {
-        stocks.map((stock) => <Stock key={stock.symbol} stock={stock} />)
-      }
+      <PortfolioStocks stocks={stocks}/>
     </div>
   );
 }

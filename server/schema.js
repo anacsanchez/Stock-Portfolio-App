@@ -48,8 +48,8 @@ const typeDefs = gql`
 
   type Stock {
     symbol: String!
-    company: String!
-    price: Float!
+    companyName: String!
+    currentUnitPrice: Float!
   }
 
   type GetStockResponse {
@@ -84,7 +84,7 @@ const typeDefs = gql`
     id: ID!
     symbol: String!
     quantity: Int!
-    price: Float!
+    currentUnitPrice: Float!
     companyName: String!
   }
 
@@ -102,7 +102,7 @@ const typeDefs = gql`
 
   input BuyStockInput {
     symbol: String!
-    price: Float!
+    currentUnitPrice: Float!
     companyName: String!
     quantity: Int!
   }

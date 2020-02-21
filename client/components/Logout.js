@@ -5,7 +5,7 @@ const Logout = () => {
   const client = useApolloClient();
   return (
     <button onClick={() => {
-      client.writeData({ data: { isLoggedIn: false }});
+      client.writeData({ data: { isLoggedIn: false } });
       localStorage.clear();
      }} type="button">Logout</button>
   );

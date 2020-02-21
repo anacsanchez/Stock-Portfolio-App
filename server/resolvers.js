@@ -18,6 +18,9 @@ module.exports = {
         throw new ForbiddenError('User must be logged in');
       }
       const { balance, userStocks, id } = await dataSources.PortfolioAPI.getPortfolio();
+      if(!userStocks || !userStocks.length) {
+        return { portfolio: { id, balance, stocks: userStocks }, success: true, message: ''};
+      }
       const { stocks, success, message } = await dataSources.StockAPI.mapCurrentPricesToStocks(userStocks);
       return { portfolio: { id, balance, stocks }, success, message};
     },

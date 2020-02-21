@@ -12,9 +12,15 @@ const Transaction = db.define('transaction', {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    price: {
+    currentUnitPrice: {
       type: DataTypes.FLOAT,
       allowNull: false
+    },
+    total: {
+      type: DataTypes.VIRTUAL,
+      get() {
+        return this.quantity * this.currentUnitPrice;
+      }
     },
     symbol: {
       type: DataTypes.STRING,
