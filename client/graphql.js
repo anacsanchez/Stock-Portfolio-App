@@ -49,6 +49,9 @@ export const GET_TRANSACTIONS = gql`
       transactions {
         id
         quantity
+        total
+        symbol
+        companyName
       }
       success
     }

@@ -15,7 +15,7 @@ export default function Portfolio () {
   const { getPortfolio: { portfolio: { stocks, balance } } } = data;
 
   return (
-    <div>
+    <div id="portfolio">
       <h1>Portfolio</h1>
       <PurchaseStock />
       <div>Balance: { balance }</div>

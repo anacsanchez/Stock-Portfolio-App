@@ -2,7 +2,7 @@ import React, { Fragment } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { useQuery } from '@apollo/react-hooks';
 import { IS_LOGGED_IN } from './graphql';
-import { Login, Portfolio, Signup, Transactions, Navbar } from './components';
+import { Login, Portfolio, Signup, AllTransactions, Navbar } from './components';
 
 const Routes = () => {
   const { data } = useQuery(IS_LOGGED_IN);
@@ -25,7 +25,7 @@ const Routes = () => {
     :
       <Switch>
         <Route path="/transactions">
-          <Transactions />
+          <AllTransactions />
         </Route>
         <Route path="/portfolio">
           <Portfolio />

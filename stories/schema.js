@@ -1,6 +1,6 @@
-const { gql } = require('apollo-server');
+import gql from 'graphql-tag';
 
-const typeDefs = gql`
+export const typeDefs = gql`
 
   type Query {
     getMe: FindMeResponse!
@@ -115,7 +115,4 @@ const typeDefs = gql`
     success: Boolean!
     message: String
   }
-
 `;
-
-module.exports = typeDefs;

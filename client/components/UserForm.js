@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const UserForm = ({ handleSubmit }) => {
+const UserForm = ({ handleSubmit, submitName }) => {
   const [ email, setEmail ] = useState('');
   const [ password, setPassword ] = useState('');
 
@@ -10,11 +10,17 @@ const UserForm = ({ handleSubmit }) => {
   };
 
   return (
-    <div>
+    <div id="user-form">
       <form onSubmit={handleFormSubmit}>
-        <label>Email:</label><input type="email" name="email" onChange={({target}) => setEmail(target.value)} required />
-        <label>Password:</label><input type="password" name="password" onChange={({target}) => setPassword(target.value)} required />
-        <button type="submit">Submit</button>
+        <div className="form-input-box">
+          <label>Email:</label>
+          <input aria-label="email-input" type="email" name="email" onChange={({target}) => setEmail(target.value)} required />
+        </div>
+        <div className="form-input-box">
+          <label>Password:</label>
+          <input aria-label="password-input" type="password" name="password" onChange={({target}) => setPassword(target.value)} required />
+        </div>
+        <button className="account-input-btn" type="submit">{submitName}</button>
       </form>
     </div>
   );

@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 import { useMutation, useApolloClient } from '@apollo/react-hooks';
 import UserForm from './UserForm';
 import { SIGNUP_USER } from '../graphql';
@@ -17,9 +17,9 @@ const Signup = () => {
   );
 
   return (
-    <div>
-      <h1>Signup</h1>
-      <UserForm handleSubmit={(userInput) => signup({ variables: { user: {...userInput} } })}/>
+    <div className="section">
+      <h2 className="section-title">Signup</h2>
+      <UserForm submitName="Signup" handleSubmit={(userInput) => signup({ variables: { user: {...userInput} } })}/>
     </div>
   );
 };

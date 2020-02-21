@@ -19,10 +19,10 @@ const Login = () => {
   if(loading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <h2>Login</h2>
+    <div className="section">
+      <h2 className="section-title">Login</h2>
       { error && <div>Login Error, please try again</div> }
-      <UserForm handleSubmit={(userInput) => login({ variables: { user: { ...userInput } } }) }/>
+      <UserForm submitName="Login" handleSubmit={(userInput) => login({ variables: { user: { ...userInput } } }) }/>
     </div>
   );
 };
