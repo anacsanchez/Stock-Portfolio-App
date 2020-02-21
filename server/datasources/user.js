@@ -39,8 +39,6 @@ class UserAPI extends RESTDataSource {
   }
 
   async signupUser(userInput) {
-
-    console.log(userInput)
     const { models } = this.store;
     try {
       const userExists = await models.user.findOne({
@@ -56,8 +54,6 @@ class UserAPI extends RESTDataSource {
         }
       }, {  include: [ models.portfolio ]});
       const token = await generateToken(newUser.email, newUser.id);
-
-      console.log(newUser);
       return { user: newUser, token, success: true, message: '' };
     } catch(err) {
       console.log('Error', err);
