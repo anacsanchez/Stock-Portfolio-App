@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { useLazyQuery } from '@apollo/react-hooks';
 import { GET_STOCK } from '../graphql';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearchDollar } from '@fortawesome/free-solid-svg-icons';
 
 const StockSearchForm = ({ handleSearchResult }) => {
 
@@ -13,12 +15,19 @@ const StockSearchForm = ({ handleSearchResult }) => {
   });
 
   return (
-    <div className="search-box">
-      <input type="text" placeholder="Search for symbol..." onChange={({target}) => setCurrentSymbolInput(target.value)} />
-      { loading && <div>Searching...</div>}
-      { error && <div>Error: </div>}
-      <button type="button" className="search-btn" onClick={() => searchForStock({ variables: { symbol: symbolInput }})}>Search</button>
-    </div>
+    <Fragment>
+      <div className="search-box">
+        <label htmlFor="search-box"></label>
+        <input aria-label="search-input" alt="search" type="text" placeholder="Search for symbol..." onChange={({target}) => setCurrentSymbolInput(target.value)} required/>
+        <button type="button" aria-label="search-button" className="search-btn" onClick={() => searchForStock({ variables: { symbol: symbolInput }})}>
+          <FontAwesomeIcon icon={faSearchDollar} size="2x" />
+        </button>
+      </div>
+      <div className="search-status">
+        { loading && <div>Searching...</div>}
+        { error && <div>Error: Symbol Not Found</div>}
+      </div>
+    </Fragment>
   );
 };
 

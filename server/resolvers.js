@@ -35,8 +35,10 @@ module.exports = {
   Mutation: {
     signup: async(_, { input: userInput }, { dataSources }) => {
       const newUser = await dataSources.UserAPI.signupUser(userInput);
-      const { user, token } = newUser;
-      return { user, token };
+      if(!newUser.success) {
+        throw newUser.message;
+      }
+      return newUser;
     },
     login: async(_, { input: userInput }, { dataSources }) => {
       const currentUserResponse = await dataSources.UserAPI.loginUser(userInput);
@@ -50,6 +52,9 @@ module.exports = {
         throw new ForbiddenError('User must be logged in');
       }
       const buyStockAPIResponse = await dataSources.PortfolioAPI.buyStock(transactionInput);
+      if(!buyStockAPIResponse.success) {
+        throw buyStockAPIResponse.message;
+      }
       return buyStockAPIResponse;
     }
   }

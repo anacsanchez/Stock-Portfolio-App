@@ -1,13 +1,17 @@
 import React from 'react';
+import TrendingPrice from './TrendingPrice';
 
 const SingleStock = ({ stock: { symbol, currentUnitPrice, shares, companyName, isUp } }) => {
   return (
-    <div className="stock">
-      <div>Symbol: {symbol}</div>
-      <div className={ isUp ? 'price-green' : 'price-red'}>Value: { Number.parseFloat(currentUnitPrice*shares).toFixed(2) }</div>
-      <div>Shares: {shares}</div>
-      <div>Company: {companyName}</div>
-    </div>
+    <li className="stock">
+      <p className="stock-info">
+        <span className="stock-symbol">{symbol} - </span>
+        <span className="stock-shares"> {shares} Shares </span>
+      </p>
+      <p className="stock-value">
+        <TrendingPrice price={ Number.parseFloat(currentUnitPrice*shares).toFixed(2) } isUp={isUp} />
+      </p>
+    </li>
   );
 };
 

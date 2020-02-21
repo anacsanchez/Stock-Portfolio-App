@@ -19,7 +19,6 @@ const UserStock = db.define('user_stock', {
         len: [1,5]
       },
       allowNull: false,
-      unique: true
     },
     companyName: {
       type: DataTypes.STRING,

@@ -26,30 +26,34 @@ class PortfolioAPI extends RESTDataSource {
   }
 
   async buyStock(transaction) {
-    const { symbol, quantity, currentUnitPrice,companyName } = transaction;
-    const { user: { portfolio } } = this.context;
-    if(portfolio.balance < (quantity * currentUnitPrice)) {
-      return { stock: null, success: false, message: 'Balance is too low to proceed with transaction' };
-    }
-    await portfolio.reload({ include: [this.store.models.transaction, { model: this.store.models.user_stock, as: 'userStocks'} ]});
-    const newTransaction = await portfolio.createTransaction({ symbol, quantity, currentUnitPrice, companyName });
+    try {
+      const { symbol, quantity, currentUnitPrice,companyName } = transaction;
+      const { user: { portfolio } } = this.context;
+      if(portfolio.balance < (quantity * currentUnitPrice)) {
+        return { stock: null, success: false, message: 'Balance is too low to proceed with transaction' };
+      }
+      await portfolio.reload({ include: [this.store.models.transaction, { model: this.store.models.user_stock, as: 'userStocks'} ]});
+      const newTransaction = await portfolio.createTransaction({ symbol, quantity, currentUnitPrice, companyName });
 
-    portfolio.balance -= (quantity * currentUnitPrice);
-    await portfolio.save();
+      portfolio.balance -= (quantity * currentUnitPrice);
+      await portfolio.save();
 
-    const existingStock = await portfolio.getUserStocks({ where: {
-      symbol: symbol
-    }});
+      const existingStock = await portfolio.getUserStocks({ where: {
+        symbol: symbol
+      }});
 
-    if(!existingStock.length) {
-      const newUserStock = await portfolio.createUserStock({ symbol, shares: quantity, companyName });
-      return { stock: newUserStock, success: true, message: '' };
-    }
-    else {
-      existingStock[0].shares += quantity;
-      await existingStock[0].save();
-      return { stock: existingStock[0], success:true, message: ''};
-    }
+      if(!existingStock.length || !portfolio.userStocks.length) {
+        const newUserStock = await portfolio.createUserStock({ symbol, shares: quantity, companyName });
+        return { stock: newUserStock, success: true, message: '' };
+      }
+      else {
+        existingStock[0].shares += quantity;
+        await existingStock[0].save();
+        return { stock: existingStock[0], success:true, message: ''};
+      }
+    } catch(err) {
+      return { stock: null, success: false, message: err }
+   }
   }
 }
 

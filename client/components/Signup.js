@@ -19,6 +19,7 @@ const Signup = () => {
   return (
     <div className="section">
       <h2 className="section-title">Signup</h2>
+      { error && <div>Error: { error.graphQLErrors[0]?.message }</div> }
       <UserForm submitName="Signup" handleSubmit={(userInput) => signup({ variables: { user: {...userInput} } })}/>
     </div>
   );

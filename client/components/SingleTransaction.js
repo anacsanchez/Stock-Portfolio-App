@@ -4,9 +4,10 @@ const SingleTransaction = ({ transaction }) => {
   const { id, symbol, quantity, total, companyName } = transaction;
   return (
     <li key={`${id}-transaction`} className="transaction">
-      <p>{symbol} - {companyName}</p>
-      <p>{quantity}</p>
-      <p>{total}</p>
+      <p className="transaction-info">
+        <span className="stock-symbol">BUY {symbol} - </span>
+        <span className="stock-shares"> {quantity} Shares @ ${ Number.parseFloat(total).toFixed(2) }</span>
+      </p>
     </li>
   );
 };

@@ -13,7 +13,7 @@ const Login = () => {
         client.writeData({ data: { isLoggedIn: true } });
       }
     },
-    onError(err) { console.error(err); }}
+    onError(err) { return err; }}
   );
 
   if(loading) return <div>Loading...</div>;
@@ -21,7 +21,7 @@ const Login = () => {
   return (
     <div className="section">
       <h2 className="section-title">Login</h2>
-      { error && <div>Login Error, please try again</div> }
+      { error && <div>Error: { error.graphQLErrors[0]?.message }</div> }
       <UserForm submitName="Login" handleSubmit={(userInput) => login({ variables: { user: { ...userInput } } }) }/>
     </div>
   );

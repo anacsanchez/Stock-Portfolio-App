@@ -1,7 +1,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
 import PurchaseStock from './PurchaseStock';
-import UserStocks from './UserStocks';
+import PortfolioStocks from './PortfolioStocks';
 import { GET_PORTFOLIO } from '../graphql';
 
 export default function Portfolio () {
@@ -20,7 +20,7 @@ export default function Portfolio () {
         <h2>Portfolio (${+Number.parseFloat(stocks.reduce((total, { currentUnitPrice, shares }) => total + (currentUnitPrice * shares), 0)).toFixed(2)})</h2>
       </div>
       <div id="portfolio-content">
-        <UserStocks stocks={ stocks }/>
+        <PortfolioStocks stocks={ stocks }/>
         <PurchaseStock balance={balance} />
       </div>
     </div>

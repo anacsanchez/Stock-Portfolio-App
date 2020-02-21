@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/react-hooks';
 import SingleTransaction from './SingleTransaction';
 import { GET_TRANSACTIONS } from '../graphql';
 
-const AllTransactions = () => {
+const Transactions = () => {
   const { data, loading, error } = useQuery(GET_TRANSACTIONS);
 
   if(loading) return <div>Loading Transactions...</div>;
@@ -22,4 +22,4 @@ const AllTransactions = () => {
   );
 };
 
-export default AllTransactions;
+export default Transactions;
