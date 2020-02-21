@@ -28,6 +28,16 @@ export const mocks = {
             balance: 4000
           }
         }
+      },
+      getStock: () => {
+        return {
+          stock: {
+            symbol: 'aapl',
+            currentUnitPrice: 84.56,
+            companyName: 'apple',
+            __typename: "Stock"
+          }
+        }
       }
     }
   }

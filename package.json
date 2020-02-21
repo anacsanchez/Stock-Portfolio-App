@@ -11,7 +11,7 @@
     "start:dev": "npm-run-all build:watch start:dev-server",
     "start:dev-client": "npm run build:client-watch",
     "start:dev-server": "cross-env NODE_ENV=\"development\" nodemon server/index.js",
-    "storybook": "start-storybook",
+    "storybook": "start-storybook -p 3456",
     "test": "cross-env NODE_ENV=\"test\" mocha test/*.spec.js --watch --recursive"
   },
   "nodemonConfig": {

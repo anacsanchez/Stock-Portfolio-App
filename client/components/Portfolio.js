@@ -16,10 +16,13 @@ export default function Portfolio () {
 
   return (
     <div id="portfolio">
-      <h1>Portfolio</h1>
-      <PurchaseStock />
-      <div>Balance: { balance }</div>
-      <UserStocks stocks={ stocks }/>
+      <div id="portfolio-header">
+        <h2>Portfolio (${+Number.parseFloat(stocks.reduce((total, { currentUnitPrice, shares }) => total + (currentUnitPrice * shares), 0)).toFixed(2)})</h2>
+      </div>
+      <div id="portfolio-content">
+        <UserStocks stocks={ stocks }/>
+        <PurchaseStock balance={balance} />
+      </div>
     </div>
   );
 }

@@ -17,12 +17,6 @@ ul, li {
   list-style: none;
 }
 
-.stock {
-  border: 1px solid hsl(0, 0%, 80%);
-  padding: 4px;
-}
-
-
 #user-form {
   width: 400px;
 }
@@ -77,4 +71,43 @@ ul, li {
 .section-title {
   margin: 12px 6px 8px 6px;
   font-weight: 400;
+}
+
+#portfolio {
+  max-width: 900px;
+}
+
+#portfolio-content {
+  display: flex;
+  align-content: space-around;
+}
+
+#portfolio-header {
+  padding: 8px;
+}
+
+#portfolio-header h2 {
+  font-weight: 400;
+  border-bottom: 1px solid hsl(0, 0%, 80%);
+  padding: 8px 8px 8px 2px;
+  font-size: 20px;
+}
+
+.sub-section {
+  min-width: 400px;
+}
+
+.sub-section h3 {
+  font-size: 18px;
+  font-weight: 400;
+  margin: 12px 6px 8px 6px;
+}
+
+.search-btn {
+  margin: 0;
+}
+
+.stock {
+  border: 1px solid hsl(0, 0%, 80%);
+  padding: 4px;
 }

@@ -9,7 +9,7 @@ const PurchaseStockForm = ({ isUp, currentUnitPrice, handleQuantitySubmit }) => 
       </div>
       <input type="number" placeholder="Qty" name="quantity" onChange={({target}) => setQuantity(target.value) }/>
       <div>
-        Total: { currentUnitPrice ? currentUnitPrice * quantity : 0 }
+        Total: { currentUnitPrice ? Number.parseFloat(currentUnitPrice * quantity).toFixed(2) : 0 }
       </div>
       <button type="button" onClick={() => handleQuantitySubmit(+quantity)}>Purchase</button>
     </Fragment>

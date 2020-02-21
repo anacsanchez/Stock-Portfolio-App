@@ -1,8 +1,8 @@
 import React from 'react';
-import { withKnobs, text, boolean } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
 import '../client/public/style.css';
-import { UserForm, SingleStock, Login, Signup, AllTransactions, Portfolio } from '../client/components';
+import { UserForm, SingleStock, Login, Signup, AllTransactions, Portfolio, PurchaseStock, StockSearchForm } from '../client/components';
 import apolloStorybookDecorator from "apollo-storybook-react";
 import { typeDefs } from './schema';
 import { mocks } from './mocks';
@@ -41,6 +41,9 @@ export const SignupScreen = () => <Signup />
 
 export const PortfolioScreen = () => <Portfolio />;
 
+export const PurchaseStockSection = () => <PurchaseStock balance={number('Balance', 5000)} />
+
+export const StockSearchInput = () => <StockSearchForm />
 // export const withAllCards = () => <AllCardsView cards={[
 //   {
 //     "id": 1,

@@ -15,7 +15,7 @@ class StockAPI extends RESTDataSource {
     return {
       symbol: stock.symbol,
       companyName: stock.companyName,
-      currentUnitPrice: stock.latestPrice ? stock.latestPrice : stock.previousClose,
+      currentUnitPrice: stock.latestPrice ? +Number.parseFloat(stock.latestPrice).toFixed(2) : 0,
       isUp: stock.changePercent && stock.changePercent > 0
     };
   }
