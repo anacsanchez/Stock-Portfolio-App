@@ -1,4 +1,4 @@
-const { ForbiddenError } = require('apollo-server');
+const { ForbiddenError } = require('apollo-server-express');
 
 module.exports = {
   Query: {

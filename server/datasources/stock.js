@@ -1,5 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
-const { UserInputError } = require('apollo-server');
+const { UserInputError } = require('apollo-server-express');
 
 class StockAPI extends RESTDataSource {
   constructor() {

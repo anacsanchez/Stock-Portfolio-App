@@ -1,5 +1,5 @@
 const { RESTDataSource } = require('apollo-datasource-rest');
-const { AuthenticationError } = require('apollo-server');
+const { AuthenticationError } = require('apollo-server-express');
 const { generateToken, verifyPassword } = require('../utils');
 
 class UserAPI extends RESTDataSource {

@@ -1,11 +1,14 @@
 require('dotenv').config();
 
-const { ApolloServer, AuthenticationError } = require('apollo-server');
+const path = require('path');
+const express = require('express');
+const { ApolloServer, AuthenticationError } = require('apollo-server-express');
 const typeDefs = require('./schema');
 const { createStore } = require('./utils');
 const { UserAPI, StockAPI, PortfolioAPI } = require('./datasources');
 const resolvers = require('./resolvers');
 const { decodeToken } = require('./utils');
+const PORT = process.env.PORT || 8080;
 
 const store = createStore();
 
@@ -43,12 +46,24 @@ const server = new ApolloServer({
   context
 });
 
+const app = express();
+
+
+
+server.applyMiddleware({ app });
+
+app.use(express.static(path.join(__dirname, '..', 'client','public')));
+
+app.use('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'public/index.html'));
+});
+
 if(process.env.NODE_ENV == 'test') {
   module.exports = server;
 }
 else {
-  server.listen().then(({ url }) => {
-    console.log('server ready at', url);
+  app.listen(PORT, () => {
+    console.log('server ready at', PORT);
   });
 }
 
