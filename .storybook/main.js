@@ -9,7 +9,6 @@ module.exports = {
     '@storybook/addon-a11y/register',
     '@storybook/addon-backgrounds/register',
     '@storybook/addon-notes/register',
-    '@storybook/addon-cssresources/register',
     '@storybook/addon-viewport/register',
     '@storybook/addon-docs'
   ],

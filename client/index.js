@@ -10,7 +10,7 @@ import { ApolloLink, concat } from 'apollo-link';
 
 const cache = new InMemoryCache();
 const httpLink = new HttpLink({
-  uri: "http://localhost:4000/"
+  uri: "/graphql"
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
