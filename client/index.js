@@ -8,9 +8,11 @@ import { HttpLink } from 'apollo-link-http';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ApolloLink, concat } from 'apollo-link';
 
+const serviceUri = process.env.SERVICE_URI ? process.env.SERVICE_URI : '';
+
 const cache = new InMemoryCache();
 const httpLink = new HttpLink({
-  uri: "/stock-portfolio/graphql"
+  uri: `${serviceUri}/graphql`
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
@@ -36,7 +38,7 @@ cache.writeData({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Router basename="/stock-portfolio">
+    <Router basename={serviceUri}>
       <App />
     </Router>
   </ApolloProvider>

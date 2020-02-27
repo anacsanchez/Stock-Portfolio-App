@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('../config/config.js');
 
 const path = require('path');
 const express = require('express');
@@ -8,9 +8,11 @@ const { createStore } = require('./utils');
 const { UserAPI, StockAPI, PortfolioAPI } = require('./datasources');
 const resolvers = require('./resolvers');
 const { decodeToken } = require('./utils');
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 7000;
 
 const store = createStore();
+
+const { SERVICE_URI } = process.env;
 
 const dataSources = () => ({
   UserAPI: new UserAPI({ store }),
@@ -48,12 +50,25 @@ const server = new ApolloServer({
 
 const app = express();
 
-server.applyMiddleware({ app });
+server.applyMiddleware({
+  app,
+  path: SERVICE_URI ? `${SERVICE_URI}/graphql` : '/graphql'
+});
 
-app.use(express.static(path.join(__dirname, '..', 'client','public')));
+if(SERVICE_URI) {
+  app.use(SERVICE_URI, express.static(path.join(__dirname, '..', 'client','public')));
+}
+else {
+  app.use(express.static(path.join(__dirname, '..', 'client','public')));
+}
 
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'public/index.html'));
+app.use(
+  SERVICE_URI ? SERVICE_URI : '*',
+  (req, res) => {
+  const options = {
+    root: path.join(__dirname, '..','client','public')
+  };
+  res.sendFile('index.html', options);
 });
 
 if(process.env.NODE_ENV == 'test') {

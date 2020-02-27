@@ -4,6 +4,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: 'stock-portfolio:tag'
     entrypoint: ['./entrypoint.sh']
     ports:
       - "8080:8080"
@@ -15,6 +16,7 @@ services:
     build:
       context: server/db
       dockerfile: Dockerfile
+    image: 'db:tag'
     ports:
       - "5432:5432"
     env_file:
