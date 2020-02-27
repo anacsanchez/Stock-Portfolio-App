@@ -10,7 +10,7 @@ import { ApolloLink, concat } from 'apollo-link';
 
 const cache = new InMemoryCache();
 const httpLink = new HttpLink({
-  uri: "/graphql"
+  uri: "/stock-portfolio/graphql"
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
@@ -36,7 +36,7 @@ cache.writeData({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Router>
+    <Router basename="/stock-portfolio">
       <App />
     </Router>
   </ApolloProvider>
