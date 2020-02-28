@@ -7,7 +7,7 @@
     "build": "webpack --config webpack.prod.js",
     "build:client-watch": "webpack-dev-server --config webpack.dev.js",
     "build:watch": "webpack -w --config webpack.dev.js",
-    "start": "cross-env NODE_ENV=\"production\" node server/index.js",
+    "start": "node server/index.js",
     "start:dev": "concurrently \"npm:build:watch\" \"npm:start:dev-server\"",
     "start:dev-client": "npm run build:client-watch",
     "start:dev-server": "cross-env NODE_ENV=\"development\" nodemon server/index.js",
