@@ -4,17 +4,22 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: 'stock-portfolio:latest'
     entrypoint: ['./entrypoint.sh']
     ports:
-      - "8080:8080"
+      - "7000:7000"
     env_file:
       - .env
     depends_on:
       - db
+    environment:
+      - NODE_ENV=production
+      - DB_HOST=db:5432
   db:
     build:
       context: server/db
       dockerfile: Dockerfile
+    image: 'db:latest'
     ports:
       - "5432:5432"
     env_file:

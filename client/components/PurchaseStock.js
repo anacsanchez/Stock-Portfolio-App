@@ -19,15 +19,17 @@ const PurchaseStock = ({ balance }) => {
   });
 
   const handlePurchase = (quantity) => {
-    const { symbol, currentUnitPrice, companyName } = stock;
-    buyStock({ variables: { stock: { symbol, currentUnitPrice, companyName, quantity }} });
+    if(quantity > 0) {
+      const { symbol, currentUnitPrice, companyName } = stock;
+      buyStock({ variables: { stock: { symbol, currentUnitPrice, companyName, quantity }} });
+    }
   };
 
   return (
     <div className="sub-section">
       <h2 className="section-sub-title">Buy Stock</h2>
       <h3 className="section-sub-header">Balance: ${ Number.parseFloat(balance).toFixed(2) }</h3>
-      <form id="purchase-stock-form">
+      <form id="purchase-stock-form" onSubmit={(evt) => evt.preventDefault()}>
         <StockSearchForm handleSearchResult={(stockSearchResult) => setCurrentStock(stockSearchResult)}/>
         { stock?.currentUnitPrice &&
         <PurchaseStockForm currentUnitPrice={ stock.currentUnitPrice } isUp={ stock.isUp } handleQuantitySubmit={ handlePurchase } companyName={ stock.companyName }/>

@@ -8,9 +8,20 @@ const { createStore } = require('./utils');
 const { UserAPI, StockAPI, PortfolioAPI } = require('./datasources');
 const resolvers = require('./resolvers');
 const { decodeToken } = require('./utils');
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 7000;
 
 const store = createStore();
+
+let servicePath;
+
+if(process.env.NODE_ENV === 'production' && process.env.SERVICE_PATH) {
+  servicePath = process.env.SERVICE_PATH;
+}
+else {
+  servicePath = '/';
+}
+
+console.log(servicePath)
 
 const dataSources = () => ({
   UserAPI: new UserAPI({ store }),
@@ -48,12 +59,17 @@ const server = new ApolloServer({
 
 const app = express();
 
-server.applyMiddleware({ app });
+server.applyMiddleware({
+  app,
+  path: `${servicePath}graphql`
+});
 
-app.use(express.static(path.join(__dirname, '..', 'client','public')));
+app.use(servicePath, express.static(path.join(__dirname, '..', 'client','public')));
 
-app.use('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '..', 'client', 'public/index.html'));
+app.use(process.env.SERVICE_PATH ? servicePath : '*', (req, res) => {
+  res.sendFile('index.html', {
+    root: path.join(__dirname, '..','client','public')
+  });
 });
 
 if(process.env.NODE_ENV == 'test') {

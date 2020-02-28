@@ -94,3 +94,13 @@ export const BUY_STOCK = gql`
     }
   }
 `;
+
+// export default {
+//   IS_LOGGED_IN,
+//   GET_PORTFOLIO,
+//   GET_STOCK,
+//   GET_TRANSACTIONS,
+//   LOGIN_USER,
+//   SIGNUP_USER,
+//   BUY_STOCK
+// };
