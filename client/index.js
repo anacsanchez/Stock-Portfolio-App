@@ -7,10 +7,13 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import { HttpLink } from 'apollo-link-http';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ApolloLink, concat } from 'apollo-link';
+import { formatBasename } from './utils';
+
+const servicePath = process.env.SERVICE_PATH ? process.env.SERVICE_PATH : '/';
 
 const cache = new InMemoryCache();
 const httpLink = new HttpLink({
-  uri: "/stock-portfolio/graphql"
+  uri: `${servicePath}graphql`
 });
 
 const authMiddleware = new ApolloLink((operation, forward) => {
@@ -36,8 +39,10 @@ cache.writeData({
 
 ReactDOM.render(
   <ApolloProvider client={client}>
-    <Router basename="/stock-portfolio">
+    <Router basename={formatBasename(servicePath)}>
       <App />
     </Router>
   </ApolloProvider>
 ,document.getElementById('app'));
+
+

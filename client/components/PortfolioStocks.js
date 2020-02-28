@@ -13,4 +13,5 @@ const PortfolioStocks = ({ stocks }) => {
   );
 };
 
+
 export default PortfolioStocks;

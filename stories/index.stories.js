@@ -1,5 +1,5 @@
 import React from 'react';
-import { withKnobs, text, boolean, number } from '@storybook/addon-knobs';
+import { withKnobs, text, boolean, number, array } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
 import '../client/public/style.css';
 import { UserForm, SingleStock, Login, Signup, Transactions, Portfolio, PurchaseStock, StockSearchForm, PurchaseStockForm, PortfolioStocks, Navbar } from '../client/components';
@@ -42,7 +42,7 @@ export const SignupScreen = () => <Signup />;
 
 export const PortfolioScreen = () => <Portfolio />;
 
-export const AllPortfolioStocks = () => <PortfolioStocks stocks={
+export const AllPortfolioStocks = () => <PortfolioStocks stocks={array('Stocks',
   [
     {
       id: 1,
@@ -63,7 +63,7 @@ export const AllPortfolioStocks = () => <PortfolioStocks stocks={
       __typename: "UserStock"
     }
   ]
-}/>;
+)} />;
 
 export const PurchaseStockSection = () => <PurchaseStock balance={number('Balance', 5000)} />
 
