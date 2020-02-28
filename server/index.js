@@ -1,4 +1,4 @@
-require('../config/config.js');
+require('dotenv').config();
 
 const path = require('path');
 const express = require('express');
@@ -12,7 +12,16 @@ const PORT = process.env.PORT || 7000;
 
 const store = createStore();
 
-const { SERVICE_URI } = process.env;
+let servicePath;
+
+if(process.env.NODE_ENV === 'production' && process.env.SERVICE_PATH) {
+  servicePath = process.env.SERVICE_PATH;
+}
+else {
+  servicePath = '/';
+}
+
+console.log(servicePath)
 
 const dataSources = () => ({
   UserAPI: new UserAPI({ store }),
@@ -52,23 +61,15 @@ const app = express();
 
 server.applyMiddleware({
   app,
-  path: SERVICE_URI ? `${SERVICE_URI}/graphql` : '/graphql'
+  path: `${servicePath}graphql`
 });
 
-if(SERVICE_URI) {
-  app.use(SERVICE_URI, express.static(path.join(__dirname, '..', 'client','public')));
-}
-else {
-  app.use(express.static(path.join(__dirname, '..', 'client','public')));
-}
+app.use(servicePath, express.static(path.join(__dirname, '..', 'client','public')));
 
-app.use(
-  SERVICE_URI ? SERVICE_URI : '*',
-  (req, res) => {
-  const options = {
+app.use(process.env.SERVICE_PATH ? servicePath : '*', (req, res) => {
+  res.sendFile('index.html', {
     root: path.join(__dirname, '..','client','public')
-  };
-  res.sendFile('index.html', options);
+  });
 });
 
 if(process.env.NODE_ENV == 'test') {
