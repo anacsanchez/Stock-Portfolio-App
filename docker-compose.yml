@@ -11,6 +11,8 @@ services:
       - .env
     depends_on:
       - db
+    environment:
+      - DB_HOST=db:5432
   db:
     build:
       context: server/db
