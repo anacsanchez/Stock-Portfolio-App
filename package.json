@@ -10,7 +10,7 @@
     "start": "node server/index.js",
     "start:dev": "concurrently \"npm:build:watch\" \"npm:start:dev-server\"",
     "start:dev-client": "npm run build:client-watch",
-    "start:dev-server": "cross-env NODE_ENV=\"development\" nodemon server/index.js",
+    "start:dev-server": "cross-env NODE_ENV=\"development\" nodemon src/server/index.js",
     "storybook": "start-storybook -p 3456",
     "test": "cross-env NODE_ENV=\"test\" mocha test/*.spec.js --watch --recursive"
   },
