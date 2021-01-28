@@ -1,0 +1,27 @@
+{
+	"env": {
+		"browser": true,
+		"es6": true,
+		"node": false
+	},
+	"parser": "babel-eslint",
+	"parserOptions": {
+		"ecmaFeatures": {
+			"jsx": true
+		},
+		"sourceType": "module"
+	},
+	"plugins": [
+		"react"
+	],
+	"extends": [
+		"eslint:recommended",
+		"plugin:react/recommended"
+	],
+	"rules": {
+		"react/prop-types": [
+			1
+		],
+		"semi": "warn"
+	}
+}

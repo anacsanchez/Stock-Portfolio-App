@@ -16,7 +16,7 @@ services:
       - DB_HOST=db:5432
   db:
     build:
-      context: server/db
+      context: src/db
       dockerfile: Dockerfile
     image: db:latest
     ports:
