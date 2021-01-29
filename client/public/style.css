@@ -1,11 +1,24 @@
 :root {
-	--green: hsl(120, 50%, 35%);
-	--red: hsl(0, 50%, 50%);
+	--light-green: hsl(120, 52%, 48%);
+	--dark-green-bg: hsl(120, 50%, 35%);
+	--red: hsl(0, 98%, 60%);
 	--input-border-color: hsl(0, 0%, 50%);
+	--dark-neutral-text: #d4d4d4;
+	--dark-neutral-bg: #151515;
+	--dark-selection-bg: #004daa;
+	--dark-selection-text: #e8e6e3;
+	--dark-bg: #1a1a1a;
+	--text-for-dark-bg: #e6e6e6;
+	--border-for-dark-bg: #6c6c6c;
+	--bright-green-text: hsl(150, 80%, 40%);
+	--bright-blue-text: hsl(200, 60%, 60%);
+	--faded-gray: hsl(0, 0%, 50%);
 }
 
 body {
 	font-family: Arial, Helvetica, sans-serif;
+	background-color: var(--dark-bg);
+	color: var(--text-for-dark-bg);
 }
 
 h1, h2, h3, ul, li, p {
@@ -85,7 +98,7 @@ ul, li {
 
 .account-input-btn {
 	font-size: 14px;
-	background-color: var(--green);
+	background-color: var(--dark-green-bg);
 	color: white;
 	border-radius: 4px;
 	padding: 8px 12px;
@@ -105,8 +118,7 @@ ul, li {
 	font-weight: 400;
 }
 
-
-#portfolio {
+#portfolio, #transactions-section {
 	max-width: 900px;
 }
 
@@ -115,11 +127,12 @@ ul, li {
 	justify-content: space-between;
 }
 
-#portfolio-header {
+#portfolio-header, #transactions-header {
 	padding: 8px;
+	color: var(--text-for-dark-bg);
 }
 
-#portfolio-header h2 {
+#portfolio-header h2, #transactions-header h2 {
 	font-weight: 400;
 	border-bottom: 1px solid hsl(0, 0%, 80%);
 	padding: 8px 8px 8px 2px;
@@ -140,22 +153,30 @@ ul, li {
 }
 
 .section-sub-title {
-	margin: 8px 6px 12px 6px;
+	margin: 12px 6px 12px 6px;
 	font-weight: 400;
 	font-size: 18px;
-	color: hsl(0, 0%, 50%);
+}
+
+.bright-sub-title {
+	color: var(--bright-green-text);
+}
+
+#transaction-title {
+	color: var(--dark-neutral-text);
+	padding-left: 4px;
 }
 
 .section-sub-header {
 	font-size: 16px;
 	font-weight: 400;
-	margin: 12px 6px 12px 6px;
+	margin: 16px 6px 12px 6px;
 }
 
 .search-box {
 	display: flex;
 	align-content: baseline;
-	margin: 12px 6px 8px 6px;
+	margin: 14px 6px 8px 6px;
 }
 
 .search-box input {
@@ -172,7 +193,7 @@ ul, li {
 .search-btn {
 	margin-left:1px;
 	border: 0;
-	background-color: 0;
+	background-color: transparent;
 }
 
 .search-btn:hover {
@@ -199,11 +220,10 @@ ul, li {
 
 .trend-price {
 	margin-left: 4px;
-	font-size: 16px;
 }
 
 .price-green {
-	color: var(--green);
+	color: var(--light-green);
 }
 
 .price-red {
@@ -220,7 +240,7 @@ ul, li {
 }
 
 .small-submit-btn {
-	background-color: var(--green);
+	background-color: var(--dark-green-bg);
 	font-size: 14px;
 	border: 0;
 	border-radius: 4px;
@@ -241,12 +261,24 @@ ul, li {
 	margin-top: 6px;
 }
 
+.stock {
+	align-items: baseline;
+}
+
+.stock-value {
+	font-size: 18px;
+}
+
 .transaction {
 	border: none;
 }
 
 .stock-symbol {
 	text-transform: uppercase;
+}
+
+.stock-shares {
+	font-size: 16px;
 }
 
 #navbar {
@@ -259,11 +291,10 @@ ul, li {
 
 .nav-links a {
 	text-decoration: none;
-	color: hsl(220, 50%, 50%);
+	color: var(--bright-blue-text);
 	padding: 4px 2px;
 	margin: 12px 10px 2px 6px;
 	font-size: 16px;
-	border-bottom: 1px solid hsl(220, 50%, 80%);
 }
 
 .nav-links a:hover {
@@ -285,4 +316,8 @@ ul, li {
 	padding: 6px;
 	border-bottom: 1px solid gray;
 	width: 250px;
+}
+
+.error-message {
+	color: var(--red);
 }

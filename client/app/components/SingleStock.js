@@ -8,7 +8,7 @@ const SingleStock = ({ stock: { symbol, currentUnitPrice, shares, isUp } }) => {
 		<li className="stock">
 			<p className="stock-info">
 				<span className="stock-symbol">{symbol} - </span>
-				<span className="stock-shares"> {shares} Shares </span>
+				<span className="stock-shares"> {shares} Shares (${formatPrice(currentUnitPrice)})</span>
 			</p>
 			<p className="stock-value">
 				<TrendingPrice

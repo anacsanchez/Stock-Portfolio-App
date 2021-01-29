@@ -36,6 +36,7 @@ const StockSearchForm = ({ handleSearchResult }) => {
 				>
 					<FontAwesomeIcon
 						icon={faSearchDollar}
+						color="white"
 						size="2x"
 					/>
 				</button>

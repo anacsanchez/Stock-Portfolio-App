@@ -13,15 +13,22 @@ const Transactions = () => {
 	const { transactions } = data.getPortfolioTransactions;
 
 	return (
-		<ul id="all-transactions">
-			{ transactions?.length ? transactions.map(transaction =>
-				<SingleTransaction
-					key={transaction.id}
-					transaction={transaction}
-				/>
-				) : ''
-			}
-		</ul>
+		<div id="transactions-section">
+			<div id="transactions-header">
+				<h2 id="transaction-sub-title">
+					Transaction History
+				</h2>
+			</div>
+			<ul id="all-transactions">
+				{ transactions?.length ? transactions.map(transaction =>
+					<SingleTransaction
+						key={transaction.id}
+						transaction={transaction}
+					/>
+					) : ''
+				}
+			</ul>
+		</div>
 	);
 };
 

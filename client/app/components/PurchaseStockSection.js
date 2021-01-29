@@ -6,10 +6,10 @@ import PurchaseStockForm from './PurchaseStockForm';
 import { BUY_STOCK, GET_PORTFOLIO, GET_TRANSACTIONS } from '../graphql';
 import { formatPrice } from '../utils';
 
-const PurchaseStock = ({ balance }) => {
+const PurchaseStockSection = ({ balance }) => {
 	const [ stock, setCurrentStock ] = useState({});
 
-	const [ buyStock ] = useMutation(BUY_STOCK, {
+	const [ buyStock, { error } ] = useMutation(BUY_STOCK, {
 		errorPolicy: "all",
 		refetchQueries: [
 			{ query: GET_PORTFOLIO },
@@ -31,12 +31,9 @@ const PurchaseStock = ({ balance }) => {
 
 	return (
 		<div className="sub-section">
-			<h2 className="section-sub-title">
+			<h2 className="bright-sub-title section-sub-title">
 				Buy Stock
             </h2>
-			<h3 className="section-sub-header">
-				Balance: ${formatPrice(balance)}
-			</h3>
 			<form id="purchase-stock-form" onSubmit={(evt) => evt.preventDefault()}>
 				<StockSearchForm handleSearchResult={(stockSearchResult) => setCurrentStock(stockSearchResult)} />
 				{ stock?.currentUnitPrice &&
@@ -48,12 +45,16 @@ const PurchaseStock = ({ balance }) => {
 					/>
 				}
 			</form>
+			<h3 className="section-sub-header">
+				Balance: ${formatPrice(balance)}
+			</h3>
+			{ error ? <div className="error-message">Error: {error.graphQLErrors[0].message}</div> : '' }
 		</div>
 	);
 };
 
-PurchaseStock.propTypes = {
+PurchaseStockSection.propTypes = {
 	balance: PropTypes.number
 };
 
-export default PurchaseStock;
+export default PurchaseStockSection;

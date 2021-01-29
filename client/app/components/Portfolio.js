@@ -1,6 +1,6 @@
 import React from 'react';
 import { useQuery } from '@apollo/react-hooks';
-import PurchaseStock from './PurchaseStock';
+import PurchaseStockSection from './PurchaseStockSection';
 import PortfolioStocks from './PortfolioStocks';
 import { GET_PORTFOLIO } from '../graphql';
 import { formatPrice } from '../utils';
@@ -20,12 +20,12 @@ export default function Portfolio() {
 		<div id="portfolio">
 			<div id="portfolio-header">
 				<h2>
-					Portfolio (${formatPrice(portfolioTotal)})
+					My Portfolio (${formatPrice(portfolioTotal)})
 				</h2>
 			</div>
 			<div id="portfolio-content">
 				<PortfolioStocks stocks={stocks} />
-				<PurchaseStock balance={balance} />
+				<PurchaseStockSection balance={balance} />
 			</div>
 		</div>
 	);

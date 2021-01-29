@@ -1,4 +1,4 @@
-const { ForbiddenError } = require('apollo-server-express');
+const { ForbiddenError, ApolloError } = require('apollo-server-express');
 
 module.exports = {
     Query: {
@@ -53,7 +53,7 @@ module.exports = {
             }
             const buyStockAPIResponse = await dataSources.PortfolioAPI.buyStock(transactionInput);
             if (!buyStockAPIResponse.success) {
-                throw buyStockAPIResponse.message;
+                throw new ApolloError(buyStockAPIResponse.message);
             }
             return buyStockAPIResponse;
         }

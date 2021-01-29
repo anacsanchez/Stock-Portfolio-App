@@ -26,7 +26,7 @@ const PurchaseStockForm = ({ isUp, currentUnitPrice, handleQuantitySubmit, compa
 				onChange={({ target }) => setQuantity(target.value)}
 			/>
 			<p className="total-price">
-				Total: {currentUnitPrice ? formatPrice(currentUnitPrice * quantity) : 0}
+				Total: ${currentUnitPrice ? formatPrice(currentUnitPrice * quantity) : 0}
 			</p>
 			<button
 				type="button"

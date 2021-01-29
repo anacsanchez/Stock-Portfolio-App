@@ -89,6 +89,7 @@ const typeDefs = gql`
         currentUnitPrice: Float!
         companyName: String!
         total: Float!
+		createdAt: String!
     }
 
     type GetPortfolioResponse {

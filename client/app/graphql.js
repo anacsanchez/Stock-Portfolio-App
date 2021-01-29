@@ -52,6 +52,7 @@ export const GET_TRANSACTIONS = gql`
                 total
                 symbol
                 companyName
+				createdAt
             }
             success
         }

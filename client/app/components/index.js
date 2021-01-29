@@ -3,7 +3,7 @@ export { default as Logout } from './Logout';
 export { default as Navbar } from './Navbar';
 export { default as Portfolio } from './Portfolio';
 export { default as PortfolioStocks } from './PortfolioStocks';
-export { default as PurchaseStock } from './PurchaseStock';
+export { default as PurchaseStockSection } from './PurchaseStockSection';
 export { default as PurchaseStockForm } from './PurchaseStockForm';
 export { default as Signup } from './Signup';
 export { default as SingleStock } from './SingleStock';
