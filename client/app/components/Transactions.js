@@ -25,7 +25,7 @@ const Transactions = () => {
 						key={transaction.id}
 						transaction={transaction}
 					/>
-					) : ''
+					) : 'Go to your Portfolio and buy stocks to get started!'
 				}
 			</ul>
 		</div>

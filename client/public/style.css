@@ -315,7 +315,6 @@ ul, li {
 .transaction-info {
 	padding: 6px;
 	border-bottom: 1px solid gray;
-	width: 250px;
 }
 
 .error-message {

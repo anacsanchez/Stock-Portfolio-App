@@ -56,7 +56,7 @@ class PortfolioAPI extends RESTDataSource {
                     { model: this.store.models.user_stock, as: 'userStocks'}
                 ]
             });
-            const newTransaction = await portfolio.createTransaction({ symbol, quantity, currentUnitPrice, companyName });
+            await portfolio.createTransaction({ symbol, quantity, currentUnitPrice, companyName });
 
             portfolio.balance -= (quantity * currentUnitPrice);
             await portfolio.save();
@@ -78,7 +78,7 @@ class PortfolioAPI extends RESTDataSource {
                 await existingStock[0].save();
                 return {
                     stock: existingStock[0],
-                    success:true,
+                    success: true,
                     message: ''
                 };
             }
