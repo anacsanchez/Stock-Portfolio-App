@@ -3,7 +3,7 @@ require('dotenv').config();
 const path = require('path');
 const express = require('express');
 const { ApolloServer, AuthenticationError } = require('apollo-server-express');
-const typeDefs = require('./schema');
+const { typeDefs } = require('./schema');
 const { createStore } = require('./utils');
 const { UserAPI, StockAPI, PortfolioAPI } = require('./datasources');
 const resolvers = require('./resolvers');

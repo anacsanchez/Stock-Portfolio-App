@@ -1,4 +1,5 @@
 const { ForbiddenError, ApolloError } = require('apollo-server-express');
+const { scalars } = require('./schema');
 
 module.exports = {
     Query: {
@@ -57,5 +58,6 @@ module.exports = {
             }
             return buyStockAPIResponse;
         }
-    }
+	},
+	...scalars
 };

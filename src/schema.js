@@ -1,6 +1,9 @@
 const { gql } = require('apollo-server-express');
+const { GraphQLScalarType } = require('graphql');
+const moment = require('moment');
 
 const typeDefs = gql`
+	scalar Date
 
     type Query {
         getMe: FindMeResponse!
@@ -89,7 +92,7 @@ const typeDefs = gql`
         currentUnitPrice: Float!
         companyName: String!
         total: Float!
-		createdAt: String!
+		createdAt: Date
     }
 
     type GetPortfolioResponse {
@@ -119,4 +122,18 @@ const typeDefs = gql`
 
 `;
 
-module.exports = typeDefs;
+const scalars = {
+	Date: new GraphQLScalarType({
+		name: 'Date',
+		serialize: (value) => moment(value).format('YYYY-MM-DD H:mm:ss'),
+		parseValue: (value) => value,
+		parseLiteral(ast) {
+			return moment(ast).isValid() ? moment(ast).format('YYYY-MM-DD H:mm:ss') : null;
+		}
+	})
+};
+
+module.exports = {
+	typeDefs,
+	scalars
+};
