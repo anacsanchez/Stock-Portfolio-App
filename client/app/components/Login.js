@@ -22,6 +22,7 @@ const Login = () => {
 
 	return (
 		<div className="section">
+			<div id="welcome">Welcome to your stock management solution!</div>
 			<h2 className="section-title">Login</h2>
 			{ error &&
 				<div>Error: {error.graphQLErrors[0]?.message}</div>
