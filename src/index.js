@@ -58,7 +58,6 @@ if (process.env.NODE_ENV === 'development') {
     app.use(require('webpack-hot-middleware')(compiler));
 }
 
-
 server.applyMiddleware({ app });
 
 app.use(express.static(path.join(__dirname, '..', 'client','public')));
