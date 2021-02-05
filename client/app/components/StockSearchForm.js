@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearchDollar } from '@fortawesome/free-solid-svg-icons';
 
 const StockSearchForm = ({ handleSearchResult }) => {
-	const [symbolInput, setCurrentSymbolInput] = useState('');
+	const [ symbolInput, setCurrentSymbolInput ] = useState('');
+	const [ isFocused, setIsFocused ] = useState(false);
 
 	const [searchForStock, { loading, error }] = useLazyQuery(GET_STOCK, {
 		errorPolicy: "all",
@@ -18,7 +19,7 @@ const StockSearchForm = ({ handleSearchResult }) => {
 
 	return (
 		<Fragment>
-			<div className="search-box">
+			<form id="search-box">
 				<label htmlFor="search-box"></label>
 				<input
 					aria-label="search-input"
@@ -26,10 +27,11 @@ const StockSearchForm = ({ handleSearchResult }) => {
 					type="text"
 					placeholder="Search for symbol..."
 					onChange={({ target }) => setCurrentSymbolInput(target.value)}
+					onFocus={() => setIsFocused(true)}
 					required
 				/>
 				<button
-					type="button"
+					type={isFocused ? "submit" : "button"}
 					aria-label="search-button"
 					className="search-btn"
 					onClick={() => searchForStock({ variables: { symbol: symbolInput } })}
@@ -40,7 +42,7 @@ const StockSearchForm = ({ handleSearchResult }) => {
 						size="2x"
 					/>
 				</button>
-			</div>
+			</form>
 			<div className="search-status">
 				{loading ? <div>Searching...</div> : ''}
 				{error ? <div>Error: Symbol Not Found</div> : ''}

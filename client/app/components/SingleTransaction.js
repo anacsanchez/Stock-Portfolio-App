@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { formatPrice } from '../utils';
 
 const SingleTransaction = ({ transaction: { id, symbol, quantity, total, createdAt } }) => {
-	const transactionText = `BUY ${symbol?.toUpperCase()} - ${quantity} Shares @ ${formatPrice(total)} ${createdAt}`;
+	const transactionText = `BUY ${symbol?.toUpperCase()} - ${quantity} Shares @ ${formatPrice(total)}`;
 	return (
 		<li key={`${id}-transaction`} className="transaction">
 			<p className="transaction-info">
-				{transactionText}
+				<span>{transactionText}</span><span>{createdAt}</span>
 			</p>
 		</li>
 	);

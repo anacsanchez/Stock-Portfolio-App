@@ -23,6 +23,7 @@ const PurchaseStockForm = ({ isUp, currentUnitPrice, handleQuantitySubmit, compa
 				placeholder="Quantity"
 				name="quantity"
 				className="quantity-input"
+				min={0}
 				onChange={({ target }) => setQuantity(target.value)}
 			/>
 			<p className="total-price">
