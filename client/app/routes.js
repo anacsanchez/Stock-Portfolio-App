@@ -18,7 +18,7 @@ const Routes = () => {
 						<Login />
 					</Route>
 					<Route path="/">
-						<Landing />
+						<Login />
 					</Route>
 				</Switch>
 				:
