@@ -7,13 +7,29 @@
 	--dark-neutral-bg: #151515;
 	--dark-selection-bg: #004daa;
 	--dark-selection-text: #e8e6e3;
-	--dark-bg: #1a1a1a;
+	--dark-bg: hsl(243, 51%, 17%);
+	--med-dark-bg: hsl(243, 48%, 20%);
+	--dark-gray-bg:  hsl(243, 48%, 20%);
+	--light-bg: hsl(257, 44%, 48%);
+	--lightest-bg: hsl(265, 47%, 48%);
+	--light-purple-text: hsl(283, 95%, 77%);
 	--text-for-dark-bg: #e6e6e6;
 	--border-for-dark-bg: #6c6c6c;
 	--bright-green-text: hsl(150, 80%, 40%);
 	--bright-blue-text: hsl(200, 60%, 60%);
 	--faded-gray: hsl(0, 0%, 50%);
 }
+
+/*
+very dark purple: rgba(0,0,2,255)
+deep purple: rgba(23,21,64,255)
+dark-bg: #1a1a1a;
+med purple: rgba(28,26,74,255)
+light-med-purple: rgba(49,47,116,255)
+light purple: rgba(84,72,175,255)
+pink-purple: rgba(100,69,178,255)
+pink rgba(114,66,181,255)
+*/
 
 body {
 	font-family: Arial, Helvetica, sans-serif;
@@ -47,14 +63,13 @@ ul, li {
 #arrow {
 	width: 400px;
 	height: 200px;
-	/* margin: 16px 0 0 0; */
 }
 
 #landing {
 	width: 100%;
 }
 
-#welcome {
+#welcome-landing {
 	width: 100%;
 	padding-top: 24px;
 	display: flex;
@@ -74,6 +89,7 @@ ul, li {
 	padding: 16px 24px;
 	border-radius: 10px;
 	align-items: center;
+	background-color: rgba(28,26,74,255);
 }
 
 .form-input-box {
@@ -98,7 +114,7 @@ ul, li {
 
 .account-input-btn {
 	font-size: 14px;
-	background-color: var(--dark-green-bg);
+	background-color: var(--lightest-bg);
 	color: white;
 	border-radius: 4px;
 	padding: 8px 12px;
@@ -120,6 +136,7 @@ ul, li {
 
 #portfolio, #transactions-section {
 	max-width: 900px;
+	padding: 6px 28px;
 }
 
 #portfolio-content {
@@ -130,6 +147,7 @@ ul, li {
 #portfolio-header, #transactions-header {
 	padding: 8px;
 	color: var(--text-for-dark-bg);
+	max-width: 750px;
 }
 
 #portfolio-header h2, #transactions-header h2 {
@@ -144,6 +162,10 @@ ul, li {
 	padding: 12px 8px 8px 8px;
 	min-width: 300px;
 	max-width: 500px;
+}
+
+#all-transactions {
+	width: 90%;
 }
 
 .sub-section {
@@ -173,25 +195,27 @@ ul, li {
 	margin: 16px 6px 12px 6px;
 }
 
-.search-box {
+#search-box {
 	display: flex;
 	align-content: baseline;
 	margin: 14px 6px 8px 6px;
 }
 
-.search-box input {
-	padding: 6px;
+#search-box input {
+	padding: 8px;
 	border-radius: 2px;
 	border: 1px solid gray;
+	background-color: var(--dark-gray-bg);
 	font-size: 14px;
+	color: var(--text-for-dark-bg);
 }
 
-.search-box input::placeholder {
+#search-box input::placeholder {
 	color: hsl(0, 0%, 50%);
 }
 
 .search-btn {
-	margin-left:1px;
+	margin-left: 6px;
 	border: 0;
 	background-color: transparent;
 }
@@ -231,12 +255,14 @@ ul, li {
 }
 
 .quantity-input {
-	padding: 4px;
-	border-radius: 2px;
-	border: 1px solid var(--input-border-color);
 	margin: 2px 0 6px 0;
-	font-size: 14px;
 	width: 80px;
+	padding: 8px;
+	border-radius: 2px;
+	border: 1px solid gray;
+	background-color: var(--dark-gray-bg);
+	font-size: 14px;
+	color: var(--text-for-dark-bg);
 }
 
 .small-submit-btn {
@@ -285,15 +311,16 @@ ul, li {
 	width: 100%;
 	display: flex;
 	justify-content: space-between;
-	max-width: 700px;
+	max-width: 800px;
 	padding: 12px 4px;
 }
 
 .nav-links a {
 	text-decoration: none;
 	color: var(--bright-blue-text);
+	font-weight: 600;
 	padding: 4px 2px;
-	margin: 12px 10px 2px 6px;
+	margin: 12px 10px 2px 2px;
 	font-size: 16px;
 }
 
@@ -303,9 +330,11 @@ ul, li {
 
 .logout-btn {
 	font-size: 14px;
-	background-color: white;
-	padding: 4px 8px;
+	background-color: var(--lightest-bg);
+	padding: 6px 8px;
+	border: none;
 	border-radius: 4px;
+	color: white;
 }
 
 .logout-btn:hover {
@@ -313,10 +342,19 @@ ul, li {
 }
 
 .transaction-info {
+	display: flex;
 	padding: 6px;
 	border-bottom: 1px solid gray;
+	justify-content: space-between;
+	width: 90%;
 }
 
 .error-message {
 	color: var(--red);
+}
+
+#welcome {
+	font-size: 24px;
+	margin-bottom: 12px;
+	color: var(--light-purple-text);
 }
