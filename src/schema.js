@@ -54,6 +54,7 @@ const typeDefs = gql`
         companyName: String!
         currentUnitPrice: Float!
         isUp: Boolean
+		isAvailable: Boolean
     }
 
     type GetStockResponse {

@@ -5,6 +5,7 @@ import { formatPrice } from '../utils';
 
 const PurchaseStockForm = ({ isUp, currentUnitPrice, handleQuantitySubmit, companyName }) => {
 	const [ quantity, setQuantity ] = useState(0);
+
 	return (
 		<div id="purchase-info-form">
 			<p className="company-info">

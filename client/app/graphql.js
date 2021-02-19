@@ -36,6 +36,8 @@ export const GET_STOCK = gql`
                 symbol
                 currentUnitPrice
                 companyName
+				isUp
+				isAvailable
             }
             success
             message

@@ -15,6 +15,8 @@ const PurchaseStockSection = ({ balance }) => {
 			{ query: GET_PORTFOLIO },
 			{ query: GET_TRANSACTIONS }
 		],
+		awaitRefetchQueries: true,
+		update() { setCurrentStock(() => {}); },
 		onError(err) { console.error(err); }
 	});
 
@@ -34,7 +36,7 @@ const PurchaseStockSection = ({ balance }) => {
 			<h2 className="bright-sub-title section-sub-title">
 				Buy Stock
             </h2>
-			<form id="purchase-stock-form" onSubmit={(evt) => evt.preventDefault()}>
+			<div id="purchase-stock-form" onSubmit={(evt) => evt.preventDefault()}>
 				<StockSearchForm handleSearchResult={(stockSearchResult) => setCurrentStock(stockSearchResult)} />
 				{ stock?.currentUnitPrice &&
 					<PurchaseStockForm
@@ -44,7 +46,7 @@ const PurchaseStockSection = ({ balance }) => {
 						companyName={stock.companyName}
 					/>
 				}
-			</form>
+			</div>
 			<h3 className="section-sub-header">
 				Balance: ${formatPrice(balance)}
 			</h3>
